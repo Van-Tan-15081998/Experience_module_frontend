@@ -6,35 +6,205 @@
       check out the
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
     </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    <div class="container">
+      <!--      teleport-->
+      <button id="show-modal" @click="showModal = true">Show Modal</button>
+      <Teleport to="body">
+        <!-- use the modal component, pass in the prop -->
+        <core-modal :show="showModal" @close="showModal = false">
+          <template #header>
+            <h3>custom header</h3>
+          </template>
+        </core-modal>
+      </Teleport>
+      <!--      teleport-->
+
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Launch demo modal
+      </button>
+      <core-button/>
+      <core-button icon="fa-spin"/>
+      <core-button
+              :disable="true"
+              text="Disabled Button"
+      />
+      <core-button
+              background="primary"
+              :btn-outline="true"
+              text="Outline Button"
+      />
+      <core-button
+              background="primary"
+              text="Primary Button"
+      />
+      <core-button
+              background="secondary"
+              text="Secondary Button"
+      />
+      <core-button
+              background="warning"
+              text="Warning Button"
+      />
+      <core-button
+              background="danger"
+              text="Danger Button"
+      />
+      <core-button
+              background="info"
+              text="Info Button"
+      />
+      <core-button
+              background="light"
+              text="Light Button"
+      />
+      <core-button
+              background="light"
+              text-color="red"
+              text="Color Text Button"
+      />
+      <core-button
+              :loading="true"
+              background="success"
+              text="Danger Button"
+      />
+
+    </div>
+    <div class="container">
+      <core-button
+              icon="fa fa-shopping-cart"
+              :on-click-btn="clickBtn"
+      />
+      <core-table
+              :items="items"
+              :fields="fields"
+      />
+    </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    <div  class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+
+  import CoreButton from "@/core/components/button/CoreButton";
+  import CoreTable from "@/core/components/table/CoreTable";
+  import testingData from "@/core/components/table/TestingData";
+  // import CoreBaseTable from "@/core/components/base/CoreBaseTable";
+  import CoreModal from "@/core/components/modal/CoreModal";
+  import CoreBaseTable from "@/core/components/base/CoreBaseTable";
+
 export default {
   name: 'HelloWorld',
+  extends:[CoreBaseTable],
   props: {
     msg: String
+  },
+  components: {
+    CoreButton,
+    CoreTable,
+    // CoreBaseTable
+    CoreModal
+  },
+  // extends: [CoreBaseTable],
+  data () {
+    return {
+      showModal: false,
+      items: [],
+      fields: [
+        {
+          key: 'no',
+          label: 'No',
+        },
+        {
+          key: 'id',
+          label: 'Post ID',
+        },
+        {
+          key: 'title',
+          label: 'Post Title',
+        },
+        {
+          key: 'content',
+          label: 'Post Content',
+        },
+        {
+          key: 'author',
+          label: 'Post Author',
+        }
+      ]
+    }
+  },
+  created() {
+    this.items = testingData.data;
+    this.parsedPostData();
+
+    this.exEventBus.on('TEST_EVENT', (data) => {
+      console.log('EVENT DATA', data)
+    } )
+  },
+  computed() {
+
+  },
+  methods: {
+    parsedPostData() {
+      if(this.items.length > 0) {
+        this.items.forEach((element) => {
+          element.title = this.buildPostTitle(element.title);
+          element.author = this.buildPostAuthor(element.author);
+        })
+
+        console.log(this.items);
+      }
+    },
+
+    buildPostTitle(postTitle) {
+      if(postTitle) {
+        return `<div><b>${postTitle}</b></div>`;
+      }
+      return '';
+    },
+    buildPostAuthor(postAuthor) {
+      let dataToSend = {
+        eventName: 'TEST_EVENT',
+        data: {
+          title: 'Test thử thôi',
+          time: '15:06',
+        }
+      }
+
+      dataToSend = JSON.stringify(dataToSend).replaceAll("\"", "'")
+
+      if(postAuthor) {
+        if(postAuthor) {
+          return `<core-button @click="executeEventMethod(${dataToSend})"  text="${postAuthor}" />`
+                  + `<core-button icon="fa fa-search" @click="executeEventMethod(${dataToSend})" />`
+                  + `<core-button icon="fa fa-edit" @click="executeEventMethod(${dataToSend})" />`
+                  + `<core-button icon="fa fa-trash" @click="executeEventMethod(${dataToSend})" />`;
+        }
+        return '';
+      }
+    },
+    clickBtn(event) {
+      console.log('clickBtn_event', event)
+    }
   }
 }
 </script>
