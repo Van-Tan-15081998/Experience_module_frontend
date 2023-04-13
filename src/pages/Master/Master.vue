@@ -1,4 +1,5 @@
 <template>
+	<div class="core-app-style core-neumorphism-style dark-mode">
   <div class="master">
     <div
         class="left-content"
@@ -28,10 +29,18 @@
               </div>
             </li>
           </router-link>
-          <router-link to="/master/pattern-page">
+          <router-link to="/master/system">
             <li>
               <div class="menu-item">
                 <div class="menu-icon"><i class="bi bi-gear"></i></div>
+                <div class="menu-label">System</div>
+              </div>
+            </li>
+          </router-link>
+          <router-link to="/master/pattern-page">
+            <li>
+              <div class="menu-item">
+                <div class="menu-icon"><i class="bi bi-box"></i></div>
                 <div class="menu-label">Pattern</div>
               </div>
             </li>
@@ -43,12 +52,28 @@
       <router-view></router-view>
     </div>
   </div>
+	</div>
 </template>
 
 <script>
+import { useAuthStore } from '@/store/System/AuthStore';
+import apiService from "@/plugins/api/apiService";
+
 export default {
   name: 'Master-Page',
   setup() {
+    const authStore = useAuthStore();
+
+    let appApiService = apiService(this, authStore);
+
+    return {
+      appApiService
+    }
+  },
+  provide() {
+    return {
+      apiService: this.appApiService
+    }
   },
   data() {
     return {
@@ -77,7 +102,7 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  background-color: #202125;
+  background-color: inherit;
 
   .left-content {
     width: 40px;

@@ -5,9 +5,13 @@ import mitt from 'mitt'; // Use for eventBus
 
 import router from './router/routes'; // Use for Vue router
 
-import apiService from './plugins/api/apiService'; // Use ApiService
+// import apiService from './plugins/api/apiService'; // Use ApiService
 
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Use for Bootstrap-icons
+
+import { createPinia } from 'pinia'; // Use Pinia
+
+const pinia = createPinia();
 
 /// Vue 3 createApp method
 const myApp = createApp(App);
@@ -19,7 +23,10 @@ myApp.config.globalProperties.exEventBus = exEventBus;
 // Use router
 myApp.use(router);
 
-myApp.provide('apiService', apiService);
+// Use Pinia
+myApp.use(pinia);
+
+// myApp.provide('apiService', apiService);
 
 // Mount
 myApp.mount('#app');

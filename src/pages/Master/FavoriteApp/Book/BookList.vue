@@ -1,7 +1,5 @@
 <template>
-  <div
-      @scroll="listenScroll"
-      class="page">
+  <div class="page">
     <div id="navbar" class="page-info">
       <div class="page-title">
         Page title
@@ -17,77 +15,134 @@
     </div>
     <div id="page-content" class="page-content">
 
-      <div class="button-add">
+      <button class="core-app-style__button green-harmony-color icon-effect-zoom-in">
         Add
-      </div>
+      </button>
 
-      <table class="table">
-        <thead class="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>
-            <div class="actions">
-              <div class="action-icon-button view">
-                <i class="bi bi-search"></i>
-              </div>
-              <div class="action-icon-button edit">
-                <i class="bi bi-pencil-fill"></i>
-              </div>
-              <div class="action-icon-button delete">
-                <i class="bi bi-trash3-fill"></i>
-              </div>
-              <div class="action-icon-button copy">
-                <i class="bi bi-clipboard-check-fill"></i>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>@twitter</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-        </tbody>
-      </table>
+      <core-table
+          :fields="tableBookFields"
+					:items="items"
+          :pagination-info="paginationInfo"
+					:loading="loadingTable"
+      >
+        <template #bookId="{ data }">
+          <div>
+            {{ data.bookId }}
+          </div>
+        </template>
+
+        <template #title="{ data }">
+          <div>
+            {{ data.title }}
+          </div>
+        </template>
+
+				<template #action="{ data }">
+					<div class="actions">
+						<button
+							@click="openDetailForm(data.bookId)"
+							class="core-app-style__button green-harmony-color icon-effect-zoom-in">
+							<i class="bi bi-search"></i>
+						</button>
+						<button class="core-app-style__button blue-harmony-color icon-effect-zoom-in">
+							<i class="bi bi-pencil-fill"></i>
+						</button>
+						<button class="core-app-style__button red-harmony-color icon-effect-zoom-in">
+							<i class="bi bi-trash3-fill"></i>
+						</button>
+						<button class="core-app-style__button navy-harmony-color icon-effect-zoom-in">
+							<i class="bi bi-clipboard-check-fill"></i>
+						</button>
+					</div>
+				</template>
+      </core-table>
     </div>
+
+		<Teleport to="#modal-container-position">
+
+			<core-modal :show="isOpenFormDetail" @close="closeForm">
+				<template #header>
+					<h3>Custom header</h3>
+				</template>
+
+				<template #body>
+					<book-detail
+						:item-id="itemId"
+					/>
+				</template>
+			</core-modal>
+		</Teleport>
+
   </div>
 </template>
 
 <script>
+
+import CoreBaseTable from "@/core/components/base/CoreBaseTable.vue";
+import CoreTable from "@/core/components/common/CoreTable.vue";
+
+import bookApi from "@/scripts/Master/FavoriteApp/Book/BookApi";
+import UserList from "@/pages/Master/PatternPage/Pattern-02/UserList.vue";
+
+import BookDetail from "@/pages/Master/FavoriteApp/Book/BookDetail.vue";
+
 export default {
   name: 'BookList',
   setup() {
 
   },
+  components: {
+    CoreTable,
+    UserList,
+		BookDetail
+  },
+  inject: ['apiService'],
+  extends: CoreBaseTable,
+  created() {
+    // this.getList();
+  },
+  computed: {
+    tableBookFields() {
+      return [
+        {
+          key: 'bookId',
+          label: 'bookId_label',
+          class: 'col-table',
+        },
+        {
+          key: 'title',
+          label: 'title_label',
+          class: 'col-table',
+        },
+        {
+          key: 'action',
+          label: 'action_label',
+          class: 'col-table',
+        }
+      ]
+    }
+  },
+  data() {
+    return {
+      books: [],
+			context: this,
+			loadTableDataService: bookApi,
+
+			formDetail: BookDetail,
+
+			paginationInfo: {
+				currentPage: 0,
+				limitCount: 0,
+				totalCount: 0,
+				totalPages: 0
+			},
+    }
+  },
   mounted() {
 
   },
   methods: {
-    listenScroll(event) {
-      let scrollTop = event.currentTarget.scrollTop;
-      if (scrollTop > 80) {
-        document.getElementById("navbar").classList.add("sticky")
-      } else {
-        document.getElementById("navbar").classList.remove("sticky")
-      }
-    }
+
   },
 }
 </script>
@@ -97,6 +152,7 @@ export default {
   height: 100%;
   width: 100%;
   overflow: scroll;
+  background-color: inherit;
 
   .page-info {
     width: 100%;
@@ -216,15 +272,6 @@ export default {
         border-color: #85EDEE;
       }
     }
-
-    table {
-      border-color: #948C6A;
-      color: #C3E5AE;
-
-      thead {
-        color: #85EDEE;
-      }
-    }
   }
 
   .actions {
@@ -233,48 +280,73 @@ export default {
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
+  }
+}
 
-    .action-icon-button {
-      height: 25px;
-      width: 30px;
-      border: 1px solid #948C6A;
-      border-radius: 2px;
-      margin-right: 4px;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      transition: 0.1s;
-      color: #948C6A;
+.paginate {
+  .custom-table-footer {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .items-per-page {
+    width: 100px;
+  }
+  ul.pagination {
+    margin-bottom: 0px;
+  }
+  .custom-pagination {
+    margin: 5px 10px;
 
-      &:hover {
-        cursor: pointer;
-        border: 1px solid #555555;
+    ul {
+
+      li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        float: left;
+        width: 50px;
+        height: 40px;
+        background-color: #948C6A;
+        margin-right: 2px;
         color: white;
 
-        &.edit {
-          background-color: #F1DD00;
+        list-style: none;
+        cursor: pointer;
+        user-select: none;
+        transition: 0.1s;
+
+        :last-child {
+          margin-right: 0px;
         }
 
-        &.view {
-          background-color: #42b983;
+        i {
+          font-size: 22px;
+          color: white;
         }
 
-        &.delete {
-          background-color: orangered;
+        &:hover {
+          background-color: #555555;
+          color: #85EDEE;
+          i {
+            color: #85EDEE;
+          }
         }
 
-        &.copy {
-          background-color: darkturquoise;
+        &:active {
+          transform: scale(0.9);
         }
-      }
 
-      &:active {
-        transform: scale(0.8);
-        box-shadow: lightslategray 1px 1px 2px 1px;
+        &.selected {
+          background-color: #85EDEE;
+          color: #555555;
+          i {
+            color: #555555;
+          }
+        }
       }
     }
+
   }
 }
 </style>

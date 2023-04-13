@@ -89,7 +89,6 @@
                         element.author = this.buildPostAuthor(element.author);
                     })
 
-                    console.log(this.items);
                 }
             },
 

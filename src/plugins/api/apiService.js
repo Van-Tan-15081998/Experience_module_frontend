@@ -2,16 +2,26 @@
 import axios from 'axios'
 
 import ApiConstants from "./apiConstants";
+
+export default function (app, store) {
+    return new ApiService(app, store);
+}
+
 class ApiService {
 
+    constructor(app, store) {
+        this.app = app;
+        this.store = store;
+    }
+
     authHeader() {
-        let user = JSON.parse(localStorage.getItem('user'));
+
         let headers = {
             Accept: 'application/json'
         };
 
-        if (user && user.token) {
-            headers.Authorization = 'Bearer ' + user.token;
+        if (this.store && this.store.checkLogin()) {
+            headers.Authorization = 'Bearer ' + this.store.checkLogin();
         }
 
         return headers;
@@ -21,7 +31,7 @@ class ApiService {
         console.log(ApiConstants.API_ROOT_URL + api)
         return axios
             .get(ApiConstants.API_ROOT_URL + api, {
-                // headers: this.authHeader()
+                headers: this.authHeader()
             })
             .then(res => {
                 return res.data;
@@ -57,5 +67,3 @@ class ApiService {
             });
     }
 }
-
-export default new ApiService();

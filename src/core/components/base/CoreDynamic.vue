@@ -28,8 +28,8 @@
         },
 
         methods: {
-            clickBtn(event) {
-                console.log(event, this.parent.parent.parent.parent.parent.clickBtn(event))
+            clickBtn() {
+
             },
 
             executeEventMethod(event) {

@@ -12,30 +12,14 @@
           <i v-else class="bi bi-chevron-bar-right"></i>
         </div>
         <ul>
-          <router-link to="/master/pattern-page/pattern-01">
+          <router-link to="/master/system/auth/auth-login">
             <li>
               <div class="menu-item">
-                <div class="menu-icon"><i class="bi bi-journal-text"></i></div>
-                <div class="menu-label">Pattern-01</div>
+                <div class="menu-icon"><i class="bi bi-person"></i></div>
+                <div class="menu-label">User</div>
               </div>
             </li>
           </router-link>
-          <router-link to="/master/pattern-page/pattern-02">
-            <li>
-              <div class="menu-item">
-                <div class="menu-icon"><i class="bi bi-journal-text"></i></div>
-                <div class="menu-label">Pattern-02</div>
-              </div>
-            </li>
-          </router-link>
-					<router-link to="/master/pattern-page/pattern-04">
-						<li>
-							<div class="menu-item">
-								<div class="menu-icon"><i class="bi bi-journal-text"></i></div>
-								<div class="menu-label">Pattern-04</div>
-							</div>
-						</li>
-					</router-link>
         </ul>
       </div>
     </div>
@@ -47,7 +31,7 @@
 
 <script>
 export default {
-  name: 'PatternPage',
+  name: 'SystemHomePage',
   setup() {
   },
   data() {
