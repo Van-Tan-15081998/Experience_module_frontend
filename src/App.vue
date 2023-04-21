@@ -1,6 +1,5 @@
 <template>
-<!--  <post-list/>-->
-  <router-view></router-view>
+	<router-view></router-view>
 </template>
 
 <script>

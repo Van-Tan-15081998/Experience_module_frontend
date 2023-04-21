@@ -36,6 +36,14 @@
 							</div>
 						</li>
 					</router-link>
+					<router-link to="/master/pattern-page/pattern-05">
+						<li>
+							<div class="menu-item">
+								<div class="menu-icon"><i class="bi bi-journal-text"></i></div>
+								<div class="menu-label">Pattern-05</div>
+							</div>
+						</li>
+					</router-link>
         </ul>
       </div>
     </div>

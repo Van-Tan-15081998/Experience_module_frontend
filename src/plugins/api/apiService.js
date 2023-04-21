@@ -50,7 +50,8 @@ class ApiService {
                 return res.data;
             })
             .catch(err => {
-                console.log(err);
+                // Cần return error data tại đây nhằm đảm bảo error trả về (response) đã được handel
+                return err.response.data;
             });
     }
 

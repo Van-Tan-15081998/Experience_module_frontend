@@ -15,9 +15,13 @@
     </div>
     <div id="page-content" class="page-content">
 
-      <button class="core-app-style__button green-harmony-color icon-effect-zoom-in">
+      <button
+				@click="openFormAdd"
+				class="core-app-style__button only-margin-vertical green-harmony-color icon-effect-zoom-in">
         Add
       </button>
+
+			<core-component-refresh :is-refreshing="false"/>
 
       <core-table
           :fields="tableBookFields"
@@ -58,11 +62,14 @@
       </core-table>
     </div>
 
-		<Teleport to="#modal-container-position">
+		<teleport to="#app">
 
-			<core-modal :show="isOpenFormDetail" @close="closeForm">
+			<core-modal
+				:width="1200"
+				:show="isOpenFormDetail"
+				@close="closeForm">
 				<template #header>
-					<h3>Custom header</h3>
+					Chi tiết Sách
 				</template>
 
 				<template #body>
@@ -70,8 +77,29 @@
 						:item-id="itemId"
 					/>
 				</template>
+
+				<template #footer>
+					<button
+						class="core-app-style__button blue-harmony-color icon-effect-zoom-in"
+					>Perform</button>
+				</template>
 			</core-modal>
-		</Teleport>
+
+		</teleport>
+
+		<teleport to="#app">
+
+			<core-modal :show="isOpenAddForm" @close="closeForm">
+				<template #header>
+					Add Book
+				</template>
+
+				<template #body>
+					<book-add/>
+				</template>
+			</core-modal>
+
+		</teleport>
 
   </div>
 </template>
@@ -80,11 +108,13 @@
 
 import CoreBaseTable from "@/core/components/base/CoreBaseTable.vue";
 import CoreTable from "@/core/components/common/CoreTable.vue";
+import CoreComponentRefresh from "@/core/components/loader/CoreComponentRefresh.vue";
 
 import bookApi from "@/scripts/Master/FavoriteApp/Book/BookApi";
 import UserList from "@/pages/Master/PatternPage/Pattern-02/UserList.vue";
 
 import BookDetail from "@/pages/Master/FavoriteApp/Book/BookDetail.vue";
+import BookAdd from "@/pages/Master/FavoriteApp/Book/BookAdd.vue";
 
 export default {
   name: 'BookList',
@@ -92,9 +122,11 @@ export default {
 
   },
   components: {
+		BookAdd,
     CoreTable,
     UserList,
-		BookDetail
+		BookDetail,
+		CoreComponentRefresh
   },
   inject: ['apiService'],
   extends: CoreBaseTable,

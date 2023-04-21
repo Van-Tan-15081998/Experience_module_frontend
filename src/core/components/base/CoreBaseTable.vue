@@ -36,7 +36,8 @@
 				filter: {},
 				items: [],
 				fields: [],
-				isOpenForm: false,
+
+				isOpenAddForm: false,
 				isOpenEditForm: false,
 				isOpenFormDetail: false,
 
@@ -136,21 +137,19 @@
 			},
 
 			openFormAdd(data = null) {
-				this.isOpenForm = true;
+				this.isOpenAddForm = true;
 				console.log(data);
 			},
 			openFormEdit(data = null) {
-				this.isOpenForm = true;
 				this.isOpenEditForm = true;
 				console.log(data);
 			},
 			openDetailForm(itemId = null) {
 				this.itemId = itemId;
 				this.isOpenFormDetail = true;
-				console.log(itemId);
 			},
 			closeForm() {
-				this.isOpenForm = false;
+				this.isOpenAddForm = false;
 				this.isOpenEditForm = false;
 				this.isOpenFormDetail = false;
 

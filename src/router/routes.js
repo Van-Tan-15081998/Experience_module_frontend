@@ -85,6 +85,11 @@ const routes = [
                         path: 'pattern-04',
                         name: 'pattern-04',
                         component: () => import('../pages/Master/PatternPage/Pattern-04/Pattern-04.vue'),
+                    },
+                    {
+                        path: 'pattern-05',
+                        name: 'pattern-05',
+                        component: () => import('../pages/Master/PatternPage/Pattern-05/Pattern-05.vue'),
                     }
                 ]
             },

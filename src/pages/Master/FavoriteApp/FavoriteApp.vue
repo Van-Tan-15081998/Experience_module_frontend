@@ -32,7 +32,11 @@
       </div>
     </div>
     <div class="page-content">
-      <router-view></router-view>
+
+			<transition name="router-anim">
+				<router-view></router-view>
+			</transition>
+
     </div>
   </div>
 </template>
@@ -177,6 +181,37 @@ export default {
     //background-image: url('https://live.staticflickr.com/65535/52762317120_902d6d20ca_h.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+		overflow: hidden;
   }
+
+
+
+	.router-anim-enter-active {
+		animation: coming 0.2s;
+		animation-delay: 0.2s;
+		opacity: 0;
+	}
+	.router-anim-leave-active {
+		animation: going 0.2s;
+	}
+	@keyframes going {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-20px);
+			opacity: 0;
+		}
+	}
+	@keyframes coming {
+		from {
+			transform: translateX(-20px);
+			opacity: 0;
+		}
+		to {
+			transform: translateX(0px);
+			opacity: 1;
+		}
+	}
 }
 </style>

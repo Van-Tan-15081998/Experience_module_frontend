@@ -1,63 +1,69 @@
 <template>
-	<div class="core-app-style core-neumorphism-style dark-mode">
-  <div class="master">
-    <div
-        class="left-content"
-        :class="{'isExpanded': isExpanded}"
-        >
-      <div class="master-menu">
-        <div
-            @click="toggleExpand"
-            class="toggle-master-menu">
-          <i v-if="isExpanded" class="bi bi-arrow-bar-left"></i>
-          <i v-else class="bi bi-arrow-bar-right"></i>
-        </div>
-        <ul>
-          <router-link to="/master/favorite-app">
-            <li>
-              <div class="menu-item">
-                <div class="menu-icon"><i class="bi bi-heart"></i></div>
-                <div class="menu-label">Favorite App</div>
-              </div>
-            </li>
-          </router-link>
-          <router-link to="/master/laravel-research">
-            <li>
-              <div class="menu-item">
-                <div class="menu-icon"><i class="bi bi-journal-code"></i></div>
-                <div class="menu-label">Laravel Research</div>
-              </div>
-            </li>
-          </router-link>
-          <router-link to="/master/system">
-            <li>
-              <div class="menu-item">
-                <div class="menu-icon"><i class="bi bi-gear"></i></div>
-                <div class="menu-label">System</div>
-              </div>
-            </li>
-          </router-link>
-          <router-link to="/master/pattern-page">
-            <li>
-              <div class="menu-item">
-                <div class="menu-icon"><i class="bi bi-box"></i></div>
-                <div class="menu-label">Pattern</div>
-              </div>
-            </li>
-          </router-link>
-        </ul>
-      </div>
-    </div>
-    <div class="page-content">
-      <router-view></router-view>
-    </div>
-  </div>
+	<div class="core-neumorphism-style dark-mode">
+		<div class="master">
+			<div
+					class="left-content"
+					:class="{'isExpanded': isExpanded}"
+					>
+				<div class="master-menu">
+					<div
+							@click="toggleExpand"
+							class="toggle-master-menu">
+						<i v-if="isExpanded" class="bi bi-arrow-bar-left"></i>
+						<i v-else class="bi bi-arrow-bar-right"></i>
+					</div>
+					<ul>
+						<router-link to="/master/favorite-app">
+							<li>
+								<div class="menu-item">
+									<div class="menu-icon"><i class="bi bi-heart"></i></div>
+									<div class="menu-label">Favorite App</div>
+								</div>
+							</li>
+						</router-link>
+						<router-link to="/master/laravel-research">
+							<li>
+								<div class="menu-item">
+									<div class="menu-icon"><i class="bi bi-journal-code"></i></div>
+									<div class="menu-label">Laravel Research</div>
+								</div>
+							</li>
+						</router-link>
+						<router-link to="/master/system">
+							<li>
+								<div class="menu-item">
+									<div class="menu-icon"><i class="bi bi-gear"></i></div>
+									<div class="menu-label">System</div>
+								</div>
+							</li>
+						</router-link>
+						<router-link to="/master/pattern-page">
+							<li>
+								<div class="menu-item">
+									<div class="menu-icon"><i class="bi bi-box"></i></div>
+									<div class="menu-label">Pattern</div>
+								</div>
+							</li>
+						</router-link>
+					</ul>
+				</div>
+			</div>
+			<div class="page-content">
+
+				<transition name="router-anim">
+					<router-view></router-view>
+				</transition>
+
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
 import { useAuthStore } from '@/store/System/AuthStore';
 import apiService from "@/plugins/api/apiService";
+
+import CoreModal from "@/core/components/modal/CoreModal.vue";
 
 export default {
   name: 'Master-Page',
@@ -75,6 +81,9 @@ export default {
       apiService: this.appApiService
     }
   },
+	components: {
+		CoreModal
+	},
   data() {
     return {
       isExpanded: false
@@ -212,5 +221,36 @@ body {
     width: 100%;
     height: 100%;
   }
+
+
+
+
+	.router-anim-enter-active {
+		animation: coming 0.2s;
+		animation-delay: 0.2s;
+		opacity: 0;
+	}
+	.router-anim-leave-active {
+		animation: going 0.2s;
+	}
+	@keyframes going {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-20px);
+			opacity: 0;
+		}
+	}
+	@keyframes coming {
+		from {
+			transform: translateX(-20px);
+			opacity: 0;
+		}
+		to {
+			transform: translateX(0px);
+			opacity: 1;
+		}
+	}
 }
 </style>

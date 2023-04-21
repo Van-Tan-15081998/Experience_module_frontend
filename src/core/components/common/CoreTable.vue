@@ -32,11 +32,10 @@
 				</tbody>
 			</table>
 
-
 			<core-loading-table
 				v-else-if="loading"
-				:columns="3"
-				:rows="3"
+				:columns="fields.length"
+				:rows="limitCount"
 			></core-loading-table>
 
 		</Transition>
@@ -44,7 +43,7 @@
 		<div class="paginate">
 			<div class="custom-table-footer" >
 				<div class="items-per-page">
-					<select v-model="limitCount" class="form-select form-select-sm" aria-label=".form-select-lg">
+					<select v-model="limitCount" class="core-app-style__dropdown">
 						<option value="5" selected>5</option>
 						<option value="10">10</option>
 						<option value="25">25</option>
@@ -120,97 +119,6 @@
 				</div>
 			</div>
 		</div>
-
-<!--		<div class="paginate">-->
-<!--			<div class="custom-table-footer" >-->
-<!--				<div class="items-per-page">-->
-<!--					<select v-model="limitCount" class="form-select form-select-sm" aria-label=".form-select-lg">-->
-<!--						<option value="5" selected>5</option>-->
-<!--						<option value="10">10</option>-->
-<!--						<option value="25">25</option>-->
-<!--						<option value="50">50</option>-->
-<!--						<option value="100">100</option>-->
-<!--					</select>-->
-<!--				</div>-->
-<!--				<div class="custom-pagination">-->
-<!--					<ul class="page-list">-->
-<!--						<li-->
-<!--							v-if="canGotoFirstPage"-->
-<!--							@click="gotoFirstPage()"-->
-<!--							class="page-item">-->
-<!--							<a>-->
-<!--								<i class="bi bi-box-arrow-in-left"></i>-->
-<!--							</a>-->
-<!--						</li>-->
-<!--						<li-->
-<!--							v-else-->
-<!--							class="page-item disabled">-->
-<!--							<a>-->
-<!--								<i class="bi bi-box-arrow-in-left"></i>-->
-<!--							</a>-->
-<!--						</li>-->
-
-<!--						<li-->
-<!--							v-if="canGotoPreviousPage"-->
-<!--							@click="gotoPreviousPage()"-->
-<!--							class="page-item">-->
-<!--							<a>-->
-<!--								<i class="bi bi-arrow-left-short"></i>-->
-<!--							</a>-->
-<!--						</li>-->
-<!--						<li-->
-<!--							v-else-->
-<!--							class="page-item disabled">-->
-<!--							<a>-->
-<!--								<i class="bi bi-arrow-left-short"></i>-->
-<!--							</a>-->
-<!--						</li>-->
-
-<!--						<li-->
-<!--							v-for="(page, index) in paginationDataParsedToShowComputed"-->
-<!--							:key="index"-->
-<!--							@click="gotoPageNumber(page.pageNumber)"-->
-<!--							:class="{'selected': page.isActive}">-->
-<!--							<a>{{ page.pageNumber }}</a>-->
-<!--						</li>-->
-
-<!--						<li-->
-<!--							v-if="canGotoNextPage"-->
-<!--							@click="gotoNextPage()"-->
-<!--							class="page-item"-->
-<!--						>-->
-<!--							<a>-->
-<!--								<i class="bi bi-arrow-right-short"></i>-->
-<!--							</a>-->
-<!--						</li>-->
-<!--						<li-->
-<!--							v-else-->
-<!--							class="page-item disabled">-->
-<!--							<a>-->
-<!--								<i class="bi bi-arrow-right-short"></i>-->
-<!--							</a>-->
-<!--						</li>-->
-
-<!--						<li-->
-<!--							v-if="canGotoLastPage"-->
-<!--							@click="gotoLastPage()"-->
-<!--							class="page-item">-->
-<!--							<a>-->
-<!--								<i class="bi bi-box-arrow-in-right"></i>-->
-<!--							</a>-->
-<!--						</li>-->
-<!--						<li-->
-<!--							v-else-->
-<!--							class="page-item disabled">-->
-<!--							<a>-->
-<!--								<i class="bi bi-box-arrow-in-right"></i>-->
-<!--							</a>-->
-<!--						</li>-->
-<!--					</ul>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--		</div>-->
-
 	</div>
 </template>
 
