@@ -39,15 +39,18 @@
 
 				isOpenAddForm: false,
 				isOpenEditForm: false,
-				isOpenFormDetail: false,
+				isOpenDetailForm: false,
 
 				params: {
 					currentPage: 0,
 					limitCount: 0,
 				},
-				isInitParams: false
+				isInitParams: false,
+
+				reloadingDataTable: false
 			}
 		},
+
 		computed: {
 
 		},
@@ -78,6 +81,10 @@
 					this.isInitParams = true;
 				}
 			})
+
+			this.exEventBus.on('CLOSE_FORM_MODAL', ()=> {
+				this.closeFormModal();
+			});
 		},
 		methods: {
 			initParams () {
@@ -121,6 +128,9 @@
 					}
 
 					this.loadingTable = false
+
+					// When refresh
+					this.reloadingDataTable = false;
 				}
 			},
 
@@ -136,24 +146,30 @@
 				return url
 			},
 
-			openFormAdd(data = null) {
+			openAddForm(data = null) {
 				this.isOpenAddForm = true;
 				console.log(data);
 			},
-			openFormEdit(data = null) {
+			openEditForm(itemId = null) {
+				this.itemId = itemId;
 				this.isOpenEditForm = true;
-				console.log(data);
+				console.log(itemId);
 			},
 			openDetailForm(itemId = null) {
 				this.itemId = itemId;
-				this.isOpenFormDetail = true;
+				this.isOpenDetailForm = true;
 			},
-			closeForm() {
+			closeFormModal() {
 				this.isOpenAddForm = false;
 				this.isOpenEditForm = false;
-				this.isOpenFormDetail = false;
+				this.isOpenDetailForm = false;
 
 				this.itemId = null;
+			},
+			reloadDataTable() {
+				this.reloadingDataTable = true;
+				this.loadDataTable();
+
 			}
 		},
 		created() {

@@ -14,6 +14,7 @@
 				cloneFormData: null,
 				inputErrors: [],
 				errors: [],
+
 				isAddForm: false,
 				isEditForm: false,
 				isDetailForm: false,
@@ -37,6 +38,7 @@
 		watch: {
 			'id' (value) {
 				if(value) {
+					console.log('id')
 					this.initFormData();
 				}
 			}
@@ -67,7 +69,7 @@
 		},
 		methods: {
 			initFormData() {
-
+				console.log('initFormData')
 				this.isLoadingFormData = true;
 
 				//-----Get data form-----//
@@ -82,8 +84,10 @@
 					let dataObj = null;
 
 					if(this.isAddForm) {
+						console.log('loadFormData isAddForm')
 						dataObj = await this.loadFormDataService.getDetailData(this.context, '?actionMode=' + this.getMode, {});
 					} else if((this.isEditForm || this.isDetailForm) && this.id) {
+						console.log('loadFormData isEditForm isDetailForm')
 						dataObj = await this.loadFormDataService.getDetailData(this.context, '?bookId=' + this.id + '&actionMode=' + this.getMode, {});
 					}
 
@@ -93,14 +97,19 @@
 					}
 
 					if(dataObj.data) {
+						this.parseData(dataObj.data.data);
 
 						if(this.isAddForm) {
-							this.parseData(dataObj.data.data);
-
 							this.initDefaultFormData();
-						} else if((this.isEditForm || this.isDetailForm) && this.id) {
-							this.formData = dataObj.data.data;
 						}
+
+						// if(this.isAddForm) {
+						// 	this.parseData(dataObj.data.data);
+						//
+						// 	this.initDefaultFormData();
+						// } else if((this.isEditForm || this.isDetailForm) && this.id) {
+						// 	this.formData = dataObj.data.data;
+						// }
 
 						if(dataObj.data['selectionItems']) {
 							this.selectionItemsFormData = dataObj.data['selectionItems'];
@@ -138,14 +147,18 @@
 
 			async save() {
 
-				this.resetInputErrors();
+				this.resetAlert();
 				this.isLoadingProcessing = true;
 
 				let dataObj = null;
 
 				if(this.loadFormDataService && this.context) {
 
-					dataObj = await this.loadFormDataService.save(this.context, true, this.formData);
+					if(this.isAddForm) {
+						dataObj = await this.loadFormDataService.save(this.context, true, this.formData);
+					} else if (this.isEditForm) {
+						dataObj = await this.loadFormDataService.save(this.context, false, this.formData);
+					}
 
 				if(!dataObj) {
 					this.isLoadingProcessing = false;
@@ -170,6 +183,8 @@
 
 				console.log(this.statuses)
 				this.isLoadingProcessing = false;
+
+				this.toTopForm();
 				}
 			},
 			delete() {
@@ -186,19 +201,20 @@
 			},
 
 			parseData(data = null) {
-				Object.keys(this.formData).forEach((key) => {
-					if(data && data[key] !== null) {
-						this.formData[key] = data[key];
-					}
-				})
+				if(this.formData) {
+					Object.keys(this.formData).forEach((key) => {
+						if(data && data[key] !== null && data[key] !== undefined) {
+							this.formData[key] = data[key];
+						}
+					})
+				}
+
+				console.log(this.formData);
 			},
 
-			reset() {
-				if(this.isEditForm) {
-						console.log('1')
-				} else {
-						console.log('2')
-				}
+			resetAlert() {
+				this.resetInputErrors();
+				this.resetStatuses();
 			},
 
 			resetSelectionItemsFormData() {
@@ -206,6 +222,18 @@
 			},
 			resetInputErrors() {
 				this.inputErrors = [];
+			},
+			resetStatuses() {
+				this.statuses = [];
+			},
+
+			closeFormModal() {
+				this.exEventBus.emit('CLOSE_FORM_MODAL', null);
+			},
+
+			toTopForm() {
+				console.log('toTopForm')
+				this.exEventBus.emit('TO_TOP_FORM', null);
 			}
 		}
 	}

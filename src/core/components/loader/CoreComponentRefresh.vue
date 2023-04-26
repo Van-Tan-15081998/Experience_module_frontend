@@ -1,7 +1,6 @@
 <template>
 	<button
 		:class="{'active': isRefreshing}"
-		@click="isRefreshing = !isRefreshing"
 		class="core-refresh">
 		<core-refresh/>
 	</button>
@@ -14,16 +13,14 @@ export default {
 	components: {
 		CoreRefresh
 	},
-	// props: {
-	// 	isRefreshing: {
-	// 		type: Boolean,
-	// 		default: false
-	// 	}
-	// }
-	data() {
-		return {
-			isRefreshing: false
+	props: {
+		isRefreshing: {
+			type: Boolean,
+			default: false
 		}
+	},
+	watch: {
+
 	}
 }
 </script>

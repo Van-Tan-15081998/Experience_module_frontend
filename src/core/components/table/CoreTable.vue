@@ -307,13 +307,6 @@
                     })
                 }
             },
-            hGetData (obj, ...args) {
-                if (args.length > 0) {
-                    let data = args.reduce((obj, level) => obj && obj[level], obj)
-                    return data || data === 0 || data === '0' ? data : '-'
-                }
-                return obj || obj === 0 || obj === '0' ? obj : '-'
-            }
         }
     }
 </script>

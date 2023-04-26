@@ -146,6 +146,9 @@ export default {
 			context: this,
 			loadFormDataService: bookApi,
 
+			formData: {
+				title: null
+			}
 		}
 	}
 }

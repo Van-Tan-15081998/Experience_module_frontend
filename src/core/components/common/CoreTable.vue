@@ -35,7 +35,7 @@
 			<core-loading-table
 				v-else-if="loading"
 				:columns="fields.length"
-				:rows="limitCount"
+				:rows="3"
 			></core-loading-table>
 
 		</Transition>
@@ -80,13 +80,9 @@
 						</button>
 
 						<button
-							v-for="(page, index) in paginationDataParsedToShowComputed"
-							:key="index"
-							@click="gotoPageNumber(page.pageNumber)"
-							:class="{'active': page.isActive}"
-							class="core-app-style__button blue-harmony-color-active icon-effect-zoom-in"
+							class="core-app-style__button active blue-harmony-color-active icon-effect-zoom-in"
 						>
-							{{ page.pageNumber }}
+							{{ currentPageComputed }} / {{ totalPagesComputed }}
 						</button>
 
 						<button
@@ -153,20 +149,18 @@ export default {
 			return Object.keys(this.$slots);
 		},
 
-		paginationDataParsedToShowComputed() {
-			let result = [];
-
-			this.paginationDataParsedToShow.forEach((element) => {
-				if(element.isShow)
-					result.push(element)
-			})
-
-			return result;
+		currentPageComputed() {
+			return this.paginationInfo.currentPage;
 		},
 
-		canGotoPageNumber() {
-			return true;
+		totalCountComputed() {
+			return this.paginationInfo.totalCount;
 		},
+
+		totalPagesComputed() {
+			return this.paginationInfo.totalPages;
+		},
+
 		canGotoFirstPage() {
 			if(this.paginationInfo.currentPage > 1) {
 				return true;
@@ -200,8 +194,6 @@ export default {
 		paginationInfo : {
 			handler (value) {
 				this.limitCount = value.limitCount;
-
-				this.parsePaginationData();
 			},
 			deep: true
 		},
@@ -270,75 +262,6 @@ export default {
     }
   },
   methods: {
-		parsePaginationData() {
-
-			this.paginationDataParsedToShow = [];
-
-			if(this.paginationInfo.totalPages > 0) {
-				for(let i = 0; i < this.paginationInfo.totalPages; i++) {
-					let itemPage = {
-						pageNumber: i + 1,
-						isActive: (i + 1) === this.paginationInfo.currentPage ? true : false,
-						isShow: true
-					}
-
-					this.paginationDataParsedToShow.push(itemPage);
-				}
-			}
-
-			if(this.paginationInfo.totalPages > 5) {
-				this.convertPaginationDataParsedToShow();
-			}
-		},
-
-		convertPaginationDataParsedToShow() {
-			// Reset isShow
-			this.paginationDataParsedToShow.forEach(element => {
-				element.isShow = false;
-			})
-
-			if(this.paginationDataParsedToShow.length > 5 && this.paginationInfo.totalPages > 5) {
-
-				// Case 1
-				if(this.paginationInfo.currentPage === 1) {
-					for(let i = 0; i < 5; i++) {
-						this.paginationDataParsedToShow[i].isShow = true;
-					}
-				}
-
-				// Case 2
-				else if(this.paginationInfo.currentPage === this.paginationInfo.totalPages) {
-					for(let i = this.paginationInfo.totalPages - 1; i > (this.paginationInfo.totalPages - 1) - 5; i--) {
-						this.paginationDataParsedToShow[i].isShow = true;
-					}
-				}
-
-				// Case 3
-				else if((this.paginationInfo.currentPage - 1) >= 2 && (this.paginationInfo.totalPages - this.paginationInfo.currentPage) >= 2) {
-					for(let i = (this.paginationInfo.currentPage - 1) - 2; i < (this.paginationInfo.currentPage - 1) + 3; i++) {
-						this.paginationDataParsedToShow[i].isShow = true;
-					}
-				}
-
-				// Case 4
-				else if((this.paginationInfo.currentPage - 1) < 2 && (this.paginationInfo.totalPages - 2) >= 3) {
-					for(let i = (this.paginationInfo.currentPage - 1) - 1; i < (this.paginationInfo.currentPage - 1) + 4; i++) {
-						this.paginationDataParsedToShow[i].isShow = true;
-					}
-				}
-
-				// Case 5
-				else if((this.paginationInfo.currentPage - 1) >= 3 && (this.totalPages - this.paginationInfo.currentPage) < 2) {
-					for(let i = (this.paginationInfo.currentPage - 1) - 3; i < (this.paginationInfo.currentPage - 1) + 2; i++) {
-						this.paginationDataParsedToShow[i].isShow = true;
-					}
-				}
-			}
-		},
-
-		gotoPageNumber(pageNumber) {
-			this.exEventBus.emit('GO_TO_PAGE', pageNumber);
-		},
 		gotoFirstPage() {
 			this.exEventBus.emit('GO_TO_PAGE', 1);
 		},

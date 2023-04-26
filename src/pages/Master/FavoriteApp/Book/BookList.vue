@@ -4,6 +4,7 @@
       <div class="page-title">
         Page title
       </div>
+
       <div class="breadcrumb">
         <ul>
           <li>Home</li>
@@ -16,12 +17,14 @@
     <div id="page-content" class="page-content">
 
       <button
-				@click="openFormAdd"
+				@click="openAddForm"
 				class="core-app-style__button only-margin-vertical green-harmony-color icon-effect-zoom-in">
         Add
       </button>
 
-			<core-component-refresh :is-refreshing="false"/>
+			<core-component-refresh
+				@click="reloadDataTable"
+				:is-refreshing="reloadingDataTable"/>
 
       <core-table
           :fields="tableBookFields"
@@ -48,7 +51,9 @@
 							class="core-app-style__button green-harmony-color icon-effect-zoom-in">
 							<i class="bi bi-search"></i>
 						</button>
-						<button class="core-app-style__button blue-harmony-color icon-effect-zoom-in">
+						<button
+							@click="openEditForm(data.bookId)"
+							class="core-app-style__button blue-harmony-color icon-effect-zoom-in">
 							<i class="bi bi-pencil-fill"></i>
 						</button>
 						<button class="core-app-style__button red-harmony-color icon-effect-zoom-in">
@@ -66,8 +71,8 @@
 
 			<core-modal
 				:width="1200"
-				:show="isOpenFormDetail"
-				@close="closeForm">
+				:show="isOpenDetailForm"
+				>
 				<template #header>
 					Chi tiết Sách
 				</template>
@@ -77,25 +82,29 @@
 						:item-id="itemId"
 					/>
 				</template>
-
-				<template #footer>
-					<button
-						class="core-app-style__button blue-harmony-color icon-effect-zoom-in"
-					>Perform</button>
-				</template>
 			</core-modal>
 
 		</teleport>
 
 		<teleport to="#app">
 
-			<core-modal :show="isOpenAddForm" @close="closeForm">
+			<core-modal :show="isOpenAddForm">
 				<template #header>
-					Add Book
+					Thêm mới sách
 				</template>
 
 				<template #body>
-					<book-add/>
+					<book-add-form/>
+				</template>
+			</core-modal>
+
+			<core-modal :show="isOpenEditForm">
+				<template #header>
+					Cập nhật sách
+				</template>
+
+				<template #body>
+					<book-edit-form :item-id="itemId"/>
 				</template>
 			</core-modal>
 
@@ -114,7 +123,8 @@ import bookApi from "@/scripts/Master/FavoriteApp/Book/BookApi";
 import UserList from "@/pages/Master/PatternPage/Pattern-02/UserList.vue";
 
 import BookDetail from "@/pages/Master/FavoriteApp/Book/BookDetail.vue";
-import BookAdd from "@/pages/Master/FavoriteApp/Book/BookAdd.vue";
+import BookAddForm from "@/pages/Master/FavoriteApp/Book/BookAddForm.vue";
+import BookEditForm from "@/pages/Master/FavoriteApp/Book/BookEditForm.vue";
 
 export default {
   name: 'BookList',
@@ -122,11 +132,12 @@ export default {
 
   },
   components: {
-		BookAdd,
+		BookAddForm,
     CoreTable,
     UserList,
 		BookDetail,
-		CoreComponentRefresh
+		CoreComponentRefresh,
+		BookEditForm,
   },
   inject: ['apiService'],
   extends: CoreBaseTable,

@@ -1,7 +1,14 @@
 <template>
     <div class="core-app-style__form">
 
+
 			<div class="form-content">
+
+				<div
+					ref="hiddenElement"
+					style="position: absolute}"
+				></div>
+
 				<slot name="formContent"></slot>
 			</div>
 
@@ -31,6 +38,11 @@ import CoreComponentLoader from "@/core/components/loader/CoreComponentLoader.vu
 		},
 		components: {
 			CoreComponentLoader
+		},
+		mounted() {
+			this.exEventBus.on('TO_TOP_FORM', () => {
+				this.$refs["hiddenElement"].scrollIntoView({ behavior: "smooth" });
+			});
 		}
 	}
 </script>

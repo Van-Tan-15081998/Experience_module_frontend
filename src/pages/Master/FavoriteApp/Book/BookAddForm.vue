@@ -104,7 +104,12 @@
 				<button
 					@click="save"
 					class="core-app-style__button blue-harmony-color icon-effect-zoom-in"
-				>Perform</button>
+				>Lưu</button>
+
+				<button
+					@click="closeFormModal"
+					class="core-app-style__button orange-harmony-color icon-effect-zoom-in"
+				>Đóng</button>
 			</template>
 
 		</core-form>
@@ -128,7 +133,7 @@ import CoreFormTextArea from "@/core/components/form-textarea/CoreFormTextarea.v
 import CoreNotification from "@/core/components/notification/CoreNotification.vue";
 
 export default {
-	name: 'BookAdd',
+	name: 'BookAddForm',
 	extends: CoreBaseForm,
 	components: {
 		CoreNotification,
