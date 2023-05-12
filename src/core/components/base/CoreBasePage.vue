@@ -1,7 +1,35 @@
 
 <script>
+import {isEmpty, cloneDeep} from 'lodash'
+import CoreBackButton from "@/core/components/back-button/CoreBackButton.vue";
+
+import CoreDropdown from "@/core/components/dropdown/CoreDropdown.vue";
+import CorePageTemplate from "@/core/components/page-template/CorePageTemplate.vue";
+import CoreTransitionContentListExpand
+	from "@/core/components/transition-content-list-expand/CoreTransitionContentListExpand.vue";
+import CoreForm from "@/core/components/form/CoreForm.vue";
+import CoreNotification from "@/core/components/notification/CoreNotification.vue";
+import CoreFormInput from "@/core/components/form-input/CoreFormInput.vue";
+import CoreTransitionContent from "@/core/components/transition-content/CoreTransitionContent.vue";
+import CoreContent from "@/core/components/content/CoreContent.vue";
+import CoreGroupContent from "@/core/components/group-content/CoreGroupContent.vue";
+import CoreFormCheckbox from "@/core/components/form-checkbox/CoreFormCheckbox.vue";
+
 export default {
 	name: 'CoreBasePage',
+	components: {
+		CoreBackButton,
+		CoreDropdown,
+		CorePageTemplate,
+		CoreTransitionContentListExpand,
+		CoreForm,
+		CoreNotification,
+		CoreFormInput,
+		CoreTransitionContent,
+		CoreContent,
+		CoreGroupContent,
+		CoreFormCheckbox
+	},
 	data() {
 		return {
 			id: null,
@@ -10,8 +38,10 @@ export default {
 			dataService: null,
 
 			isPageLoadingData: true,
+			isPageReloadingData: false,
 			pageData: null,
-			selectionItemsData: [],
+			pageDataCopy: null,
+			selectionItemsPageData: null,
 
 			actionMode: null,
 
@@ -22,13 +52,56 @@ export default {
 	mounted() {
 		this.initPage();
 	},
+	watch: {
+		actionMode: {
+			handler () {
+				if(this.dataService && this.context) {
+					this.initPage();
+				}
+			},
+			deep: true
+		},
+		routeParamComputed: {
+			handler (value) {
+				if(value && this.dataService && this.context) {
+					this.initPage();
+				}
+			},
+			deep: true
+		},
+	},
+	computed: {
+		isShowStatuses() {
+			if(this.statuses.length > 0) {
+				return true;
+			}
+			return false
+		},
+		getStatusesComputed() {
+			return this.statuses;
+		},
+		isActionModeNew() {
+			return this.actionMode === 'new';
+		},
+		isActionModeView() {
+			return this.actionMode === 'view';
+		},
+		isActionModeEdit() {
+			return this.actionMode === 'edit';
+		},
+		routeParamComputed() {
+			return this.$route.query;
+		}
+	},
 	methods: {
 		initPage() {
 			this.isPageLoadingData = true;
 
-			this.parseRouteParams();
-
-			this.loadPageData();
+			this.parseRouteParams().then((resolve) => {
+				if (resolve) {
+					this.loadPageData();
+				}
+			})
 		},
 
 		async loadPageData() {
@@ -58,11 +131,15 @@ export default {
 				if(dataObj.data) {
 					this.parsePageData(dataObj.data.data);
 
+					this.parseSelectionItemsPageData(dataObj.data.selectionItems);
+
 					if (this.actionMode === 'new') {
 						this.initDefaultData();
 					}
 
 				}
+
+				this.isPageLoadingData = false;
 			}
 		},
 
@@ -109,18 +186,28 @@ export default {
 		parseRouteParams() {
 			let routeQueryParams = this.$route.query;
 
-			if(routeQueryParams) {
-				if(routeQueryParams.actionMode) {
+			if(!isEmpty(routeQueryParams)) {
+				if(routeQueryParams.actionMode && (routeQueryParams.actionMode === 'new' || routeQueryParams.actionMode === 'edit' || routeQueryParams.actionMode === 'view')) {
+
 					this.actionMode = routeQueryParams.actionMode;
 					// => actionMode = new | edit | view
 
 					if(this.actionMode === 'edit' || this.actionMode === 'view') {
 						if(routeQueryParams.id) {
-							this.id = routeQueryParams.id;
+							this.id = parseInt(routeQueryParams.id);
 						}
 					}
+				} else if(routeQueryParams.actionMode === null || routeQueryParams.actionMode === undefined || (routeQueryParams.actionMode !== 'new' && routeQueryParams.actionMode !== 'edit' && routeQueryParams.actionMode !== 'view')) {
+
+					window.history.replaceState(null, null, this.displayURLChangeActionMode());
+					this.actionMode = 'new';
 				}
+			} else if(isEmpty(routeQueryParams)) {
+				window.history.replaceState(null, null, this.displayURLChangeActionMode());
+				this.actionMode = 'new';
 			}
+
+			return Promise.resolve(true)
 		},
 
 		parsePageData(data = null) {
@@ -130,23 +217,65 @@ export default {
 						this.pageData[key] = data[key];
 					}
 				})
-				console.log(this.pageData)
+			}
+
+			// Clone page data
+			if(this.pageData) {
+				this.pageDataCopy = cloneDeep(this.pageData);
 			}
 		},
 
-		initDefaultData() {
+		parseSelectionItemsPageData(data = null) {
+			if(this.selectionItemsPageData) {
+				Object.keys(this.selectionItemsPageData).forEach((key) => {
+					if(data && data[key] !== null && data[key] !== undefined) {
+						this.selectionItemsPageData[key] = data[key];
+					}
+				})
+			}
+		},
 
+		displayURLChangeActionMode() {
+			let url = new URL(window.location.href);
+
+			// Clear Action Mode and Id
+			url.searchParams.delete('actionMode');
+			url.searchParams.delete('id');
+
+			// Mặc định của Action Mode sẽ là 'new'
+			url.searchParams.set('actionMode', 'new');
+
+			return url;
+		},
+
+		initDefaultData() {
 		},
 
 		resetAlert() {
 			this.resetInputErrors();
 			this.resetStatuses();
 		},
+
 		resetInputErrors() {
 			this.inputErrors = [];
 		},
+
 		resetStatuses() {
 			this.statuses = [];
+		},
+
+		getSelectionItemFormDataByKey(key) {
+			if(this.selectionItemsPageData && key.toString() !== '' && this.selectionItemsPageData[key]) {
+				return this.selectionItemsPageData[key];
+			}
+			return [];
+		},
+
+		getInputErrorByKey(key) {
+			if(this.inputErrors && key.toString() !== '' && this.inputErrors[key]) {
+				return this.inputErrors[key][0];
+			}
+			return '';
 		},
 	}
 }

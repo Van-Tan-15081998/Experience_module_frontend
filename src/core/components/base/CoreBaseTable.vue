@@ -19,7 +19,7 @@
 				context: null,
 				loadTableDataService: null,
 
-				loadingTable: false,
+				isLoadingTable: false,
 				loadingSearch: false,
 
 				paginationInfo: {
@@ -110,12 +110,12 @@
 			async loadDataTable () {
 
 				if (this.loadTableDataService && this.context) {
-					this.loadingTable = true
+					this.isLoadingTable = true
 
 					let dataObj = await this.loadTableDataService.getList(this.context, this.displayURL().search, {});
 
 					if(!dataObj) {
-						this.loadingTable = false;
+						this.isLoadingTable = false;
 						return;
 					}
 
@@ -124,10 +124,10 @@
 
 						this.paginationInfo = dataObj.data.page.paginationInfo;
 
-						this.loadingTable = false;
+						this.isLoadingTable = false;
 					}
 
-					this.loadingTable = false
+					this.isLoadingTable = false
 
 					// When refresh
 					this.reloadingDataTable = false;
@@ -174,12 +174,12 @@
 		},
 		created() {
 			this.exEventBus.on('GO_TO_PAGE', (data) => {
-				if(!this.loadingTable) {
+				if(!this.isLoadingTable) {
 					this.paginationInfo.currentPage = data;
 				}
 			});
 			this.exEventBus.on('CHANGE_LIMIT_COUNT', (data) => {
-				if(!this.loadingTable) {
+				if(!this.isLoadingTable) {
 					this.paginationInfo.limitCount = data;
 				}
 			})

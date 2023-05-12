@@ -60,40 +60,32 @@ const routes = [
 
             // TODO: Knowledge Article Master Route Group
             {
-                path: 'knowledge-article-master',
-                name: 'knowledge-article-master',
+                path: 'knowledge_article_master',
+                name: 'knowledge_article_master',
                 component: () => import('../pages/Master/KnowledgeArticleMaster/KnowledgeArticleMaster.vue'),
                 children: [
                     {
                         path: 'subject/list',
-                        name: 'subject-list',
+                        name: 'subject_list',
                         component: () => import('../pages/Master/KnowledgeArticleMaster/Subject/SubjectList.vue'),
                         meta: { requiresAuth: true }
                     },
                     {
-                        path: 'subject/detail/view',
-                        name: 'subject-detail',
-                        component: () => import('../pages/Master/KnowledgeArticleMaster/Subject/SubjectView.vue'),
+                        path: 'subject/detail',
+                        name: 'subject_detail',
+                        component: () => import('../pages/Master/KnowledgeArticleMaster/Subject/SubjectDetail.vue'),
                         meta: { requiresAuth: true }
-                    }
+                    },
                     // {
-                    //     path: 'subject',
-                    //     name: 'subject',
-                    //     component: () => import('../pages/Master/KnowledgeArticleMaster/Subject/SubjectList.vue'),
-                    //     children: [
-                    //         {
-                    //             path: 'list',
-                    //             name: 'subject-list',
-                    //             component: () => import('../pages/Master/KnowledgeArticleMaster/Subject/SubjectList.vue'),
-                    //             meta: { requiresAuth: true }
-                    //         },
-                    //         {
-                    //             path: 'detail/view',
-                    //             name: 'subject-detail',
-                    //             component: () => import('../pages/Master/KnowledgeArticleMaster/Subject/SubjectView.vue'),
-                    //             meta: { requiresAuth: true }
-                    //         }
-                    //     ],
+                    //     path: 'subject/detail?actionMode=view',
+                    //     name: 'subject_view',
+                    //     component: () => import('../pages/Master/KnowledgeArticleMaster/Subject/SubjectView.vue'),
+                    //     meta: { requiresAuth: true }
+                    // },
+                    // {
+                    //     path: 'subject/detail?actionMode=new',
+                    //     name: 'subject_new',
+                    //     component: () => import('../pages/Master/KnowledgeArticleMaster/Subject/SubjectNew.vue'),
                     //     meta: { requiresAuth: true }
                     // },
                 ],

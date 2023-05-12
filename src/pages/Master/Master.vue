@@ -21,7 +21,7 @@
 								</div>
 							</li>
 						</router-link>
-						<router-link to="/master/knowledge-article-master">
+						<router-link to="/master/knowledge_article_master">
 							<li>
 								<div class="menu-item">
 									<div class="menu-icon"><i class="bi bi-heart"></i></div>

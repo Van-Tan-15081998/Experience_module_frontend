@@ -2,12 +2,13 @@
 	<div>
 		<core-page-template
 			page-title="Danh sách Chủ đề chính"
+			:is-loading-page="isLoadingTable"
 		>
 
 			<template #centerSide>
 
 			<button
-				@click="openAddForm"
+				@click="onGoNewPage"
 				class="core-app-style__button only-margin-vertical green-harmony-color icon-effect-zoom-in">
 				Add
 			</button>
@@ -20,7 +21,7 @@
 				:fields="tableSubjectFields"
 				:items="items"
 				:pagination-info="paginationInfo"
-				:loading="loadingTable"
+				:loading="isLoadingTable"
 			>
 				<template #subjectId="{ data }">
 					<div>
@@ -37,7 +38,7 @@
 				<template #action="{ data }">
 					<div class="actions">
 						<button
-							@click="goDetailPage(data.subjectId)"
+							@click="onGoViewPage(data.subjectId)"
 							class="core-app-style__button green-harmony-color icon-effect-zoom-in">
 							<i class="bi bi-search"></i>
 						</button>
@@ -65,7 +66,7 @@
 import CoreBaseTable from "@/core/components/base/CoreBaseTable.vue";
 import CoreComponentRefresh from "@/core/components/loader/CoreComponentRefresh.vue";
 import CoreTable from "@/core/components/common/CoreTable.vue";
-import subjectApi from "@/scripts/Master/KnowledgeArticleMaster/Subject/SubjectApi";
+import SubjectApi from "@/scripts/Master/KnowledgeArticleMaster/Subject/SubjectApi";
 
 import CorePageTemplate from "@/core/components/page-template/CorePageTemplate.vue";
 
@@ -102,7 +103,7 @@ export default {
 	data() {
 		return {
 			context: this,
-			loadTableDataService: subjectApi,
+			loadTableDataService: SubjectApi,
 
 			paginationInfo: {
 				currentPage: 0,
@@ -113,8 +114,13 @@ export default {
 		}
 	},
 	methods: {
-		goDetailPage(subjectId) {
-			this.$router.push({ name: 'subject-detail', query: { id: subjectId, actionMode: 'view'}})
+		onGoViewPage(subjectId) {
+			// this.$router.push({ name: 'subject_view', query: { id: subjectId, actionMode: 'view'}})
+			this.$router.push({ name: 'subject_detail', query: { id: subjectId, actionMode: 'view'}})
+		},
+		onGoNewPage() {
+			// this.$router.push({ name: 'subject_new', query: { actionMode: 'new'}})
+			this.$router.push({ name: 'subject_detail', query: { actionMode: 'new'}})
 		}
 	}
 }

@@ -1,5 +1,11 @@
 <template>
 	<div class="core-page-template">
+		<div
+			v-if="isLoadingPage"
+			class="loading-page-side">
+			<core-component-loader/>
+		</div>
+
 		<div class="page-title-side">
 			{{ pageTitle }}
 		</div>
@@ -14,6 +20,9 @@
 					<i v-if="leftSideExpanded" class="bi bi-skip-start"></i>
 					<i v-else class="bi bi-skip-end"></i>
 				</button>
+
+<!--				<slot name="backButton"></slot>-->
+				<core-back-button/>
 
 				<div class="content-side">
 					<slot name="leftSide"></slot>
@@ -73,8 +82,14 @@
 </template>
 
 <script>
+import CoreComponentLoader from "@/core/components/loader/CoreComponentLoader.vue";
+import CoreBackButton from "@/core/components/back-button/CoreBackButton.vue";
 export default {
 	name: 'CorePageTemplate',
+	components: {
+		CoreComponentLoader,
+		CoreBackButton
+	},
 	data() {
 		return {
 			leftSideExpanded: true,
@@ -93,7 +108,11 @@ export default {
 		defaultRightSideExpanded: {
 			type: Boolean,
 			default: true
-		}
+		},
+		isLoadingPage: {
+			type: Boolean,
+			default: true
+		},
 	},
 	methods: {
 		onUp() {
@@ -112,6 +131,14 @@ export default {
 	width: 100%;
 	height: 100vh;
 	background-color: inherit;
+
+	.loading-page-side {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
 
 	.page-title-side {
 		position: absolute;
@@ -206,7 +233,7 @@ export default {
 			background-color: inherit;
 			transition: 0.2s;
 
-			padding: 5px;
+			padding: 0 5px;
 
 			.content-side {
 

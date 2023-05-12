@@ -53,7 +53,13 @@ export default {
 	width: 100%;
 	height: auto;
 	overflow: hidden;
-	padding: 5px;
+
+	border-radius: 6px;
+	background-color: #1b1f23;
+	box-shadow: -4px -2px 4px 0px #262830,
+	4px 2px 6px 0px #111316;
+	cursor: pointer;
+	user-select: none;
 
 	display: flex;
 	flex-direction: column;
@@ -67,15 +73,14 @@ export default {
 		width: 100%;
 		height: 40px;
 
-		padding: 0 10px;
-		margin: 5px;
+		padding: 10px;
 
-		border-radius: 6px;
-		background-color: #1b1f23;
-		box-shadow: -4px -2px 4px 0px #262830,
-		4px 2px 6px 0px #111316;
-		cursor: pointer;
-		user-select: none;
+		//border-radius: 6px;
+		//background-color: #1b1f23;
+		//box-shadow: -4px -2px 4px 0px #262830,
+		//4px 2px 6px 0px #111316;
+		//cursor: pointer;
+		//user-select: none;
 
 		display: flex;
 		flex-direction: row;
@@ -88,6 +93,7 @@ export default {
 
 		.header-title {
 			font-size: 16px;
+			font-weight: 600;
 		}
 
 		.btn-toggle-expand {

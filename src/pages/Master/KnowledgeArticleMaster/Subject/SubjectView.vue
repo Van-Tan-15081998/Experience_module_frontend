@@ -2,6 +2,7 @@
 	<div>
 		<core-page-template
 			:page-title="'Chi tiết Chủ đề: ' + pageData.title"
+			:is-loading-page="isPageLoadingData"
 		>
 
 			<template #centerSide>
@@ -54,7 +55,7 @@
 
 <script>
 import CoreBasePage from "@/core/components/base/CoreBasePage.vue";
-import subjectApi from "@/scripts/Master/KnowledgeArticleMaster/Subject/SubjectApi";
+import SubjectApi from "@/scripts/Master/KnowledgeArticleMaster/Subject/SubjectApi";
 import CorePageTemplate from "@/core/components/page-template/CorePageTemplate.vue";
 import CoreTransitionContentListExpand
 	from "@/core/components/transition-content-list-expand/CoreTransitionContentListExpand.vue";
@@ -70,7 +71,7 @@ export default {
 	data() {
 		return {
 			context: this,
-			dataService: subjectApi,
+			dataService: SubjectApi,
 
 			idString: 'subjectId',
 

@@ -12,7 +12,7 @@
 					<i v-else class="bi bi-chevron-bar-right"></i>
 				</div>
 				<ul>
-					<router-link to="/master/knowledge-article-master/subject/list">
+					<router-link to="/master/knowledge_article_master/subject/list">
 						<li>
 							<div class="menu-item">
 								<div class="menu-icon"><i class="bi bi-journal-text"></i></div>

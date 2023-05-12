@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="core-transition-content">
 		<Transition name="content">
 
 			<slot name="transition-content-side"></slot>
@@ -15,6 +15,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.core-transition-content {
+	padding: 5px;
+}
+
 .content-enter-active {
 	transition: all 0.2s;
 	animation: jump-jump-out 0.2s cubic-bezier(0.21, 0.98, 0.6, 0.99) infinite alternate;
@@ -26,28 +30,28 @@ export default {
 
 .content-enter-from,
 .content-leave-to {
-	transform: scaleY(0);
+	transform: translateX(0);
 	opacity: 0;
 }
 @keyframes jump-jump-out {
 	0% {
-		transform: scale(0.5);
+		transform: translateX(10px);
 		opacity: 0;
 	}
 
 	100% {
-		transform: scale(1);
+		transform: translateX(0);
 		opacity: 1;
 	}
 }
 @keyframes jump-jump-in {
 	0% {
-		transform: scale(1);
+		transform: translateX(0);
 		opacity: 1;
 	}
 
 	100% {
-		transform: scale(0.5);
+		transform: translateX(10px);
 		opacity: 0;
 	}
 }

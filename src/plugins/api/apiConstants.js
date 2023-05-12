@@ -1,5 +1,5 @@
 export default {
 
-    API_ROOT_URL: 'http://192.168.1.8:8000/api'
+    API_ROOT_URL: 'http://192.168.1.2:8000/api'
 
 }

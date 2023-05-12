@@ -810,7 +810,6 @@ body {
 
                 .content-wrapper {
                     padding: 10px;
-                    margin-bottom: 10px;
                     color: #626262;
                     transition: 0.2s;
                     border-radius: 6px;
@@ -1149,9 +1148,9 @@ body {
                 background-color: inherit;
 
                 .form-content {
-                    width: 100%;
+                    width: calc(100% - 4px);
                     height: calc(100% - 60px);
-                    padding: 5px 15px;
+                    padding: 5px;
                     overflow-y: scroll;
                 }
 

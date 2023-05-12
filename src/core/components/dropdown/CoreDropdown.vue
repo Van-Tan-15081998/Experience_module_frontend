@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="input_wrapper">
-			<div class="input_label">Type</div>
+			<div class="input_label">{{ label }}</div>
 			<div class="input_validator">
 				<div
 					:class="{'can-delete' : canDelete}"
@@ -30,6 +30,10 @@
 	export default {
 		name: 'CoreDropdown',
 		props: {
+			label: {
+				type: [String],
+				default: 'Label'
+			},
 			canDelete: {
 				type: Boolean,
 				default: false
