@@ -60,7 +60,7 @@
 					<i v-else class="bi bi-skip-start"></i>
 				</button>
 
-				<div class="content-side">
+				<div class="content-side core-display-flex__LTB">
 					<slot name="rightSide"></slot>
 				</div>
 
@@ -212,6 +212,7 @@ export default {
 			}
 
 			.content-side {
+				width: 100%;
 				opacity: 0;
 			}
 
@@ -272,6 +273,7 @@ export default {
 			}
 
 			.content-side {
+				width: 100%;
 				opacity: 0;
 			}
 

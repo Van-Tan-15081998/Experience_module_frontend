@@ -1,9 +1,9 @@
 <template>
-	<div>
+	<div class="core-app-style__notification">
 		<Transition name="notification">
 			<div
 				v-if="isSuccess"
-				class="core-app-style__notification success">
+				class="notification-wrapper success">
 				<div class="notification-icon">
 					<i class="bi bi-check"></i>
 				</div>
@@ -14,7 +14,7 @@
 		<Transition name="notification">
 			<div
 				v-if="isError"
-				class="core-app-style__notification error">
+				class="notification-wrapper error">
 				<div class="notification-icon">
 					<i class="bi bi-x"></i>
 				</div>

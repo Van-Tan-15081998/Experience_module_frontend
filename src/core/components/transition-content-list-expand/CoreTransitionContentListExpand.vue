@@ -105,7 +105,7 @@ export default {
 
 	.content-list-side {
 		position: relative;
-		width: calc(100% - 20px);
+		width: calc(100% - 10px);
 		height: auto;
 		padding: 10px;
 		margin: 5px;
@@ -137,17 +137,17 @@ export default {
 
 		.header-side {
 
-			&:after {
-				content: '';
-				position: absolute;
-				left: 0;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				border-radius: 6px;
-				box-shadow: 2px 2px 2px 0px #111316 inset,
-				-2px -2px 2px 0px #262830 inset;
-			}
+			//&:after {
+			//	content: '';
+			//	position: absolute;
+			//	left: 0;
+			//	top: 0;
+			//	right: 0;
+			//	bottom: 0;
+			//	border-radius: 6px;
+			//	box-shadow: 2px 2px 2px 0px #111316 inset,
+			//	-2px -2px 2px 0px #262830 inset;
+			//}
 		}
 	}
 }

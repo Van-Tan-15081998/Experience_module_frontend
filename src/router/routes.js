@@ -64,6 +64,7 @@ const routes = [
                 name: 'knowledge_article_master',
                 component: () => import('../pages/Master/KnowledgeArticleMaster/KnowledgeArticleMaster.vue'),
                 children: [
+                    // Subject
                     {
                         path: 'subject/list',
                         name: 'subject_list',
@@ -76,18 +77,28 @@ const routes = [
                         component: () => import('../pages/Master/KnowledgeArticleMaster/Subject/SubjectDetail.vue'),
                         meta: { requiresAuth: true }
                     },
-                    // {
-                    //     path: 'subject/detail?actionMode=view',
-                    //     name: 'subject_view',
-                    //     component: () => import('../pages/Master/KnowledgeArticleMaster/Subject/SubjectView.vue'),
-                    //     meta: { requiresAuth: true }
-                    // },
-                    // {
-                    //     path: 'subject/detail?actionMode=new',
-                    //     name: 'subject_new',
-                    //     component: () => import('../pages/Master/KnowledgeArticleMaster/Subject/SubjectNew.vue'),
-                    //     meta: { requiresAuth: true }
-                    // },
+
+                    // Knowledge article
+                    {
+                        path: 'knowledge_article/list',
+                        name: 'knowledge_article_list',
+                        component: () => import('../pages/Master/KnowledgeArticleMaster/KnowledgeArticle/KnowledgeArticleList.vue'),
+                        meta: { requiresAuth: true }
+                    },
+                    {
+                        path: 'knowledge_article/detail',
+                        name: 'knowledge_article_detail',
+                        component: () => import('../pages/Master/KnowledgeArticleMaster/KnowledgeArticle/KnowledgeArticleDetail.vue'),
+                        meta: { requiresAuth: true }
+                    },
+
+                    {
+                        path: 'knowledge_article_content_unit/detail',
+                        name: 'knowledge_article_content_unit_detail',
+                        component: () => import('../pages/Master/KnowledgeArticleMaster/KnowledgeArticleContentUnit/KnowledgeArticleContentUnitDetail.vue'),
+                        meta: { requiresAuth: true }
+                    },
+
                 ],
                 meta: { requiresAuth: true }
             },

@@ -21,8 +21,11 @@
 				<Transition name="notification">
 					<div
 						v-if="isShowError"
-						class="core-app-style__notification input-error-notification">
-						{{ error }}
+						class="core-app-style__notification">
+						<div
+							class="notification-wrapper input-error-notification">
+							{{ error }}
+						</div>
 					</div>
 				</Transition>
 			</div>

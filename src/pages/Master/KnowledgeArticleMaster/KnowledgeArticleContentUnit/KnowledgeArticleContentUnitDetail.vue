@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<core-page-template
-			page-title="Tạo Chủ Đề"
+			v-if="isActionModeNew"
+			page-title="Tạo đơn vị"
 			:is-loading-page="isPageLoadingData"
 		>
 
@@ -26,7 +27,7 @@
 						</div>
 
 						<core-form-input
-							label="Core form label"
+							label="Tiêu đề"
 							:error="getInputErrorByKey('title')"
 						>
 							<template #input-side>
@@ -56,34 +57,32 @@
 </template>
 
 <script>
+
 import CoreBasePage from "@/core/components/base/CoreBasePage.vue";
-import SubjectApi from "@/scripts/Master/KnowledgeArticleMaster/Subject/SubjectApi";
+import KnowledgeArticleContentUnitApi
+	from "@/scripts/Master/KnowledgeArticleMaster/KnowledgeArticleContentUnit/KnowledgeArticleContentUnitApi";
 
 export default {
-	name: 'SubjectNew',
+	name: 'KnowledgeArticleContentUnitDetail',
 	extends: CoreBasePage,
 	inject: ['apiService'],
-	components: {
-
-	},
 	data() {
 		return {
 			context: this,
-			dataService: SubjectApi,
+			dataService: KnowledgeArticleContentUnitApi,
+
+			idString: 'knowledgeArticleContentUnitId',
 
 			pageData: {
+				knowledgeArticleId: null,
+
 				title: null,
-				level: null,
-				sequence: null,
-				parentSubjectCode: null,
-				rootSubjectCode: null,
-				branchSubjectList: [],
-				knowledgeArticleList: []
-			}
+			},
+
+			selectionItemsPageData: {
+
+			},
 		}
-	},
-	mounted() {
-		console.log('___Subject New Page')
 	}
 }
 </script>

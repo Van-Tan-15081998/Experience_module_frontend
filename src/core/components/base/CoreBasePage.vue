@@ -14,6 +14,7 @@ import CoreTransitionContent from "@/core/components/transition-content/CoreTran
 import CoreContent from "@/core/components/content/CoreContent.vue";
 import CoreGroupContent from "@/core/components/group-content/CoreGroupContent.vue";
 import CoreFormCheckbox from "@/core/components/form-checkbox/CoreFormCheckbox.vue";
+import CoreModal from "@/core/components/modal/CoreModal.vue";
 
 export default {
 	name: 'CoreBasePage',
@@ -28,7 +29,8 @@ export default {
 		CoreTransitionContent,
 		CoreContent,
 		CoreGroupContent,
-		CoreFormCheckbox
+		CoreFormCheckbox,
+		CoreModal
 	},
 	data() {
 		return {
@@ -45,11 +47,16 @@ export default {
 
 			actionMode: null,
 
+			detailPageName: '',
+
 			inputErrors: [],
 			statuses: [],
+
+			isOpenConfirmDeleteModal: false
 		}
 	},
 	mounted() {
+		console.log('___Core Base Page')
 		this.initPage();
 	},
 	watch: {
@@ -96,6 +103,10 @@ export default {
 	methods: {
 		initPage() {
 			this.isPageLoadingData = true;
+
+			if(this.$route.params.statuses) {
+				this.statuses.push(this.$route.params.statuses);
+			}
 
 			this.parseRouteParams().then((resolve) => {
 				if (resolve) {
@@ -172,6 +183,9 @@ export default {
 				// Nếu save thành công
 				if(dataObj.data) {
 					this.parsePageData(dataObj.data.data);
+
+					console.log('save thành công')
+					this.onGoViewPage();
 				}
 
 				// Nhận thông báo
@@ -186,6 +200,8 @@ export default {
 		parseRouteParams() {
 			let routeQueryParams = this.$route.query;
 
+			console.log(routeQueryParams)
+
 			if(!isEmpty(routeQueryParams)) {
 				if(routeQueryParams.actionMode && (routeQueryParams.actionMode === 'new' || routeQueryParams.actionMode === 'edit' || routeQueryParams.actionMode === 'view')) {
 
@@ -197,13 +213,24 @@ export default {
 							this.id = parseInt(routeQueryParams.id);
 						}
 					}
+
+					// Parse page data - nếu có
+					if(this.pageData) {
+						Object.keys(this.pageData).forEach((key) => {
+							console.log(key)
+							if(routeQueryParams[key] !== null && routeQueryParams[key] !== undefined) {
+								this.pageData[key] = routeQueryParams[key];
+							}
+						})
+					}
+
 				} else if(routeQueryParams.actionMode === null || routeQueryParams.actionMode === undefined || (routeQueryParams.actionMode !== 'new' && routeQueryParams.actionMode !== 'edit' && routeQueryParams.actionMode !== 'view')) {
 
-					window.history.replaceState(null, null, this.displayURLChangeActionMode());
+					window.history.replaceState(null, null, this.displayURLChangeActionModeNew());
 					this.actionMode = 'new';
 				}
 			} else if(isEmpty(routeQueryParams)) {
-				window.history.replaceState(null, null, this.displayURLChangeActionMode());
+				window.history.replaceState(null, null, this.displayURLChangeActionModeNew());
 				this.actionMode = 'new';
 			}
 
@@ -217,6 +244,11 @@ export default {
 						this.pageData[key] = data[key];
 					}
 				})
+			}
+
+			// Parse id
+			if(data && data[this.idString] !== null && data[this.idString] !== undefined) {
+				this.id = data[this.idString];
 			}
 
 			// Clone page data
@@ -235,15 +267,23 @@ export default {
 			}
 		},
 
-		displayURLChangeActionMode() {
+		displayURLChangeActionModeNew() {
 			let url = new URL(window.location.href);
 
-			// Clear Action Mode and Id
+			// Clear Action Mode and id
 			url.searchParams.delete('actionMode');
 			url.searchParams.delete('id');
 
 			// Mặc định của Action Mode sẽ là 'new'
 			url.searchParams.set('actionMode', 'new');
+
+			return url;
+		},
+
+		displayURLChangeActionModeEdit() {
+			let url = new URL(window.location.href);
+
+			url.searchParams.set('actionMode', 'edit');
 
 			return url;
 		},
@@ -277,6 +317,35 @@ export default {
 			}
 			return '';
 		},
+
+		onGoBranchSubjectViewPage(subjectId) {
+			this.$router.push({ name: this.detailPageName, query: { id: subjectId, actionMode: 'view'}});
+		},
+
+		onGoViewPage() {
+			this.$router.push(
+				{
+					name: this.detailPageName,
+					query: { id: this.id, actionMode: 'view'},
+					arguments: {statuses: this.statuses}
+				});
+		},
+
+		onGoEditPage() {
+			this.$router.push({ name: this.detailPageName, query: { id: this.id, actionMode: 'edit'}});
+		},
+
+		onOpenConfirmDeleteModal() {
+			this.isOpenConfirmDeleteModal = true;
+		},
+
+		onCloseConfirmDeleteModal() {
+			this.isOpenConfirmDeleteModal = false;
+		},
+
+		onConfirmDelete() {
+
+		}
 	}
 }
 </script>

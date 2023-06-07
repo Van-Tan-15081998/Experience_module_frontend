@@ -43,6 +43,7 @@
 							<i class="bi bi-search"></i>
 						</button>
 						<button
+							@click="onGoEditPage(data.subjectId)"
 							class="core-app-style__button blue-harmony-color icon-effect-zoom-in">
 							<i class="bi bi-pencil-fill"></i>
 						</button>
@@ -115,12 +116,13 @@ export default {
 	},
 	methods: {
 		onGoViewPage(subjectId) {
-			// this.$router.push({ name: 'subject_view', query: { id: subjectId, actionMode: 'view'}})
 			this.$router.push({ name: 'subject_detail', query: { id: subjectId, actionMode: 'view'}})
 		},
 		onGoNewPage() {
-			// this.$router.push({ name: 'subject_new', query: { actionMode: 'new'}})
 			this.$router.push({ name: 'subject_detail', query: { actionMode: 'new'}})
+		},
+		onGoEditPage(subjectId) {
+			this.$router.push({ name: 'subject_detail', query: { id: subjectId, actionMode: 'edit'}})
 		}
 	}
 }
