@@ -13,6 +13,9 @@ import { createPinia } from 'pinia'; // Use Pinia
 
 const pinia = createPinia();
 
+// Test Vuex
+import store from './vuex-store';
+
 /// Vue 3 createApp method
 const myApp = createApp(App);
 
@@ -27,6 +30,9 @@ myApp.use(router);
 myApp.use(pinia);
 
 // myApp.provide('apiService', apiService);
+
+// Test Vuex
+myApp.use(store);
 
 // Mount
 myApp.mount('#app');

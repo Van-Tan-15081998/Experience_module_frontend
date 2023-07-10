@@ -34,6 +34,13 @@
 					</template>
 				</core-transition-content>
 
+				<knowledge-article-content-unit-item
+					v-for="(item, index) in pageData.unitContentList"
+					:key="index"
+					:data="item"
+					:index="index+1"
+				/>
+
 			</template>
 
 			<template #rightSide>
@@ -105,6 +112,23 @@
 								>
 							</template>
 						</core-form-input>
+
+						<core-form-input
+							label="Choose File"
+							:error="getInputErrorByKey('title')"
+						>
+							<template #input-side>
+								<input
+									@change="onImageChange"
+									type="file"
+									placeholder="Nhập text"
+								>
+							</template>
+						</core-form-input>
+
+						<div class="core-app-style__container" v-if="pageData.image">
+							<img :src="pageData.image" class="img-responsive" height="70" width="90"/>
+						</div>
 
 					</template>
 
@@ -208,10 +232,14 @@
 import CoreBasePage from "@/core/components/base/CoreBasePage.vue";
 import KnowledgeArticleApi from "@/scripts/Master/KnowledgeArticleMaster/KnowledgeArticle/KnowledgeArticleApi";
 
+import KnowledgeArticleContentUnitItem
+	from "@/pages/Master/KnowledgeArticleMaster/KnowledgeArticleContentUnit/KnowledgeArticleContentUnitItem.vue";
+
 export default {
 	name: 'KnowledgeArticleDetail',
 	components: {
-		CoreBasePage
+		CoreBasePage,
+		KnowledgeArticleContentUnitItem
 	},
 	extends: CoreBasePage,
 	inject: ['apiService'],
@@ -231,12 +259,20 @@ export default {
 				subjectId: null,
 
 				title: null,
+
+				image: null,
+
+				unitContentList: []
 			},
 
 			selectionItemsPageData: {
 
 			},
 		}
+	},
+
+	watch: {
+
 	},
 
 	methods: {
@@ -248,7 +284,23 @@ export default {
 
 		onGoAddKnowledgeArticleUnitPage() {
 			this.$router.push({ name: 'knowledge_article_content_unit_detail', query: { actionMode: 'new', knowledgeArticleId: this.id}})
-		}
+		},
+
+		onImageChange(e) {
+			let files = e.target.files || e.dataTransfer.files;
+			if (!files.length)
+				return;
+			this.createImage(files[0]);
+		},
+
+		createImage(file) {
+			let reader = new FileReader();
+
+			reader.onload = (e) => {
+				this.pageData.image = e.target.result;
+			};
+			reader.readAsDataURL(file);
+		},
 	}
 }
 </script>

@@ -39,6 +39,18 @@
 							</template>
 						</core-form-input>
 
+						<core-form-text-area
+							label="Nội dung"
+							:error="getInputErrorByKey('content')"
+						>
+							<template #input-side>
+								<textarea
+									v-model="pageData.unitContent"
+									rows="5"
+								></textarea>
+							</template>
+						</core-form-text-area>
+
 					</template>
 
 					<template #formFooter>
@@ -49,6 +61,57 @@
 					</template>
 
 				</core-form>
+
+			</template>
+
+		</core-page-template>
+
+		<core-page-template
+			v-if="isActionModeView"
+			:page-title="'Chi tiết Unit: ' + pageData.title"
+			:is-loading-page="isPageLoadingData"
+		>
+
+			<template #centerSide>
+
+				<div
+					v-if="isShowStatuses"
+				>
+					<core-notification
+						v-for="(status, index) in getStatusesComputed"
+						:key="index"
+						:is-success="status['type'].includes('info')"
+						:message="status['message']"
+					>
+
+					</core-notification>
+				</div>
+
+				<core-transition-content>
+					<template #transition-content-side>
+						<core-content
+							v-if="pageData.title"
+							label="Tên bài viết"
+						>
+							<template #content-side>
+								{{pageData.title}}
+							</template>
+						</core-content>
+					</template>
+				</core-transition-content>
+
+				<core-transition-content>
+					<template #transition-content-side>
+						<core-content
+							v-if="pageData.unitContent"
+							label="Nội dung Unit"
+						>
+							<template #content-side>
+								{{pageData.unitContent}}
+							</template>
+						</core-content>
+					</template>
+				</core-transition-content>
 
 			</template>
 
@@ -77,6 +140,7 @@ export default {
 				knowledgeArticleId: null,
 
 				title: null,
+				unitContent: null
 			},
 
 			selectionItemsPageData: {
