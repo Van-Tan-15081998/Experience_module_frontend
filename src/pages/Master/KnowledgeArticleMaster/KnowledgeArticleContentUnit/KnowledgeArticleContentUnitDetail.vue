@@ -51,6 +51,150 @@
 							</template>
 						</core-form-text-area>
 
+						<div
+							class="image-wrapper"
+							v-for="(item, index ) in pageData.imageList" :key="index"
+						>
+							<core-form-input
+								label="Chọn File"
+							>
+								<template #input-side>
+									<input
+										@change="onImageChange($event, index)"
+										type="file"
+									>
+								</template>
+							</core-form-input>
+
+							<div
+								v-if="pageData.imageList[index]"
+								class="show-image-wrapper">
+								<div class="core-app-style__container default-size">
+									<img :src="pageData.imageList[index]" class="core-img-responsive"/>
+								</div>
+
+								<button
+									@click="onDeleteImage(index)"
+									class="core-app-style__button rounded red-harmony-color icon-effect-zoom-in"
+								>
+									<i class="bi bi-dash-circle"></i>
+								</button>
+							</div>
+
+						</div>
+
+						<button
+							@click="onAddImage"
+							class="core-app-style__button green-harmony-color icon-effect-zoom-in">
+							<i class="bi bi-plus-square-dotted margin-right-5"></i>
+							Thêm Ảnh
+						</button>
+
+					</template>
+
+					<template #formFooter>
+						<button
+							@click="save"
+							class="core-app-style__button blue-harmony-color icon-effect-zoom-in"
+						>Lưu</button>
+					</template>
+
+				</core-form>
+
+			</template>
+
+		</core-page-template>
+
+		<core-page-template
+			v-if="isActionModeEdit"
+			page-title="Cập nhật đơn vị"
+			:is-loading-page="isPageLoadingData"
+		>
+
+			<template #centerSide>
+
+				<core-form
+				>
+
+					<template #formContent>
+
+						<div
+							v-if="isShowStatuses"
+						>
+							<core-notification
+								v-for="(status, index) in getStatusesComputed"
+								:key="index"
+								:is-success="status['type'].includes('info')"
+								:message="status['message']"
+							>
+
+							</core-notification>
+						</div>
+
+						<core-form-input
+							label="Tiêu đề"
+							:error="getInputErrorByKey('title')"
+						>
+							<template #input-side>
+								<input
+									v-model="pageData.title"
+									type="text"
+									placeholder="Nhập text"
+								>
+							</template>
+						</core-form-input>
+
+						<core-form-text-area
+							label="Nội dung"
+							:error="getInputErrorByKey('content')"
+						>
+							<template #input-side>
+								<textarea
+									v-model="pageData.unitContent"
+									rows="5"
+								></textarea>
+							</template>
+						</core-form-text-area>
+
+						<div
+							class="image-wrapper"
+							v-for="(item, index ) in pageData.imageList" :key="index"
+						>
+							<core-form-input
+								label="Chọn File"
+							>
+								<template #input-side>
+									<input
+										@change="onImageChange($event, index)"
+										type="file"
+									>
+								</template>
+							</core-form-input>
+
+							<div
+								v-if="pageData.imageList[index]"
+								class="show-image-wrapper">
+								<div class="core-app-style__container default-size">
+									<img :src="pageData.imageList[index]" class="core-img-responsive"/>
+								</div>
+
+								<button
+									@click="onDeleteImage(index)"
+									class="core-app-style__button rounded red-harmony-color icon-effect-zoom-in"
+								>
+									<i class="bi bi-dash-circle"></i>
+								</button>
+							</div>
+
+						</div>
+
+						<button
+							@click="onAddImage"
+							class="core-app-style__button green-harmony-color icon-effect-zoom-in">
+							<i class="bi bi-plus-square-dotted margin-right-5"></i>
+							Thêm Ảnh
+						</button>
+
 					</template>
 
 					<template #formFooter>
@@ -140,17 +284,76 @@ export default {
 				knowledgeArticleId: null,
 
 				title: null,
-				unitContent: null
+				unitContent: null,
+				imageList: [],
+
+				knowledgeArticleContentUnitId: null // For Edit Page
 			},
 
 			selectionItemsPageData: {
 
 			},
 		}
+	},
+
+	methods: {
+		onDeleteImage(index) {
+			if (this.pageData.imageList[index]) {
+				this.pageData.imageList.splice(index, 1);
+			}
+		},
+		onAddImage() {
+			this.pageData.imageList.push(null);
+		},
+		onImageChange(e, index) {
+			let files = e.target.files || e.dataTransfer.files;
+			if (!files.length)
+				return;
+			this.createImage(files[0], index);
+		},
+
+		createImage(file, index) {
+			let reader = new FileReader();
+
+			reader.onload = (e) => {
+				this.pageData.imageList[index] = e.target.result;
+			};
+			reader.readAsDataURL(file);
+		},
 	}
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+input[type=file]::file-selector-button {
+	border: 1px dashed #BCE1A3;
+	background: #656565;
+	padding: 5px 20px;
+	margin: 5px;
+	border-radius: 5px;
+	color: white;
+	cursor: pointer;
+	transition: background .2s ease-in-out;
+	font-size: 14px;
+}
 
+input[type=file]::file-selector-button:hover {
+	background: #BCE1A3;
+	color: #555555;
+	border: 1px dashed #555555;
+}
+
+.image-wrapper {
+	padding: 5px 0;
+	border-bottom: 1px dashed #BCE1A3;
+
+	.show-image-wrapper {
+		display: flex;
+		flex-direction: row;
+
+		.core-app-style__button {
+			margin: 0 10px !important;
+		}
+	}
+}
 </style>

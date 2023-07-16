@@ -6,6 +6,7 @@
 			</div>
 			<div class="actions">
 				<button
+					@click="onGoEditPage"
 					class="core-app-style__button blue-harmony-color icon-effect-zoom-in">
 					<i class="bi bi-pencil-fill"></i>
 				</button>
@@ -17,14 +18,19 @@
 		<div class="main-body">
 			<div class="left">
 				<div class="images">
-					<div class="image">
-						<img src="https://live.staticflickr.com/65535/51495955589_0d692a8d07_c.jpg" alt="">
-						<p class="image-title">Ảnh 1</p>
+
+					<div v-if="data.imageList">
+						<div
+							v-for="(item, index) in data.imageList"
+							:key="index"
+							class="image">
+							<div class="core-app-style__container full-size">
+								<img class="core-img-responsive" :src="'http://192.168.1.4:8000/' + item.imageSource" alt="">
+							</div>
+							<p class="image-title">Ảnh 1</p>
+						</div>
 					</div>
-					<div class="image">
-						<img src="https://live.staticflickr.com/65535/51496207125_01fde41b23_c.jpg" alt="">
-						<p class="image-title">Ảnh 2</p>
-					</div>
+
 				</div>
 			</div>
 
@@ -59,6 +65,11 @@ export default {
 			default() {
 				return null
 			}
+		},
+	},
+	methods: {
+		onGoEditPage() {
+			this.$router.push({ name: 'knowledge_article_content_unit_detail', query: { id: this.data.knowledgeArticleContentUnitId, actionMode: 'edit'}})
 		}
 	}
 }
@@ -106,7 +117,7 @@ export default {
 
 			.images {
 				width: 100%;
-				padding: 5px 0px;
+				padding: 5px 0;
 
 				.image {
 					width: 100%;
@@ -115,16 +126,9 @@ export default {
 					justify-content: flex-start;
 					align-items: center;
 
-					img {
-						width: 100%;
-						height: auto;
-
-						border-radius: 5px;
-						margin-bottom: 5px;
-					}
-
 					.image-title {
 						font-size: 15px;
+						margin-top: 2px;
 					}
 				}
 			}
@@ -138,7 +142,7 @@ export default {
 			border-right: 1px dashed #656565;
 
 			.content {
-
+				white-space: pre-line;
 			}
 		}
 
