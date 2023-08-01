@@ -54,6 +54,7 @@ export default {
 	height: auto;
 	overflow: hidden;
 
+	border: 1px solid #626262;
 	border-radius: 6px;
 	background-color: #1b1f23;
 	box-shadow: -4px -2px 4px 0px #262830,

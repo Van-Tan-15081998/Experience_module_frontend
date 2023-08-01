@@ -1,5 +1,6 @@
 <template>
 	<div class="core-page-template">
+		<div class="core-page-template-background"></div>
 		<div
 			v-if="isLoadingPage"
 			class="loading-page-side">
@@ -114,6 +115,18 @@ export default {
 			default: true
 		},
 	},
+	mounted() {
+		this.exEventBus.on(
+			'SHORTCUT_GOTO_DETAIL',
+			(data) => {
+				// Get the DOM element by its ID
+				const element = document.getElementById(data);
+
+				// Scroll to the element smoothly
+				element.scrollIntoView({ behavior: 'smooth' });
+			}
+		);
+	},
 	methods: {
 		onUp() {
 			this.$refs["hiddenTopElement"].scrollIntoView({ behavior: "smooth" });
@@ -131,6 +144,16 @@ export default {
 	width: 100%;
 	height: 100vh;
 	background-color: inherit;
+
+	.core-page-template-background {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: #1F1F1F;
+		background-image: url("http://192.168.1.4:8000/images/background-optimized-2.svg");
+		background-repeat: repeat;
+		background-size: 350px;
+	}
 
 	.loading-page-side {
 		position: absolute;

@@ -1,7 +1,8 @@
 <template>
+	<div :id="data.knowledgeArticleContentUnitId + '-scroll-address'" class="hidden-item-for-shortcut"></div>
 	<div class="knowledge-article-content-unit-item">
 		<div class="header">
-			<div class="title">
+			<div class="title core-app-style__text c-label">
 				<b>{{ index }} . {{ data.title }}</b>
 			</div>
 			<div class="actions">
@@ -36,7 +37,8 @@
 
 			<div class="center">
 				<div class="content">
-					{{ data.unitContent }}
+<!--					{{ data.unitContent }}-->
+					<div v-html="data.unitContent"></div>
 				</div>
 			</div>
 
@@ -76,14 +78,21 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.hidden-item-for-shortcut {
+	width: 100%;
+	height: 2px;
+}
+
 .knowledge-article-content-unit-item {
 	display: flex;
 	flex-direction: column;
 
 	padding: 0 10px;
-	margin-bottom: 10px;
-	background-color: #1b1f23;
+	margin: 5px 5px 10px 5px;
+	//background-color: #1b1f23;
+	background-color: inherit;
 	border-radius: 6px;
+	border: 1px solid #626262;
 	box-shadow: -2px -1px 2px 0px #262830,
 	2px 1px 4px 0px #0e1013;
 
@@ -117,7 +126,7 @@ export default {
 
 			.images {
 				width: 100%;
-				padding: 5px 0;
+				padding: 5px 5px 0 0;
 
 				.image {
 					width: 100%;
@@ -136,13 +145,19 @@ export default {
 
 		.center {
 			width: 60%;
-			padding: 5px 10px;
-			margin: 0 5px;
+
+			padding: 0 10px;
 			border-left: 1px dashed #656565;
 			border-right: 1px dashed #656565;
 
 			.content {
+				padding: 5px 10px;
+				background-color: #F5F6CF;
 				white-space: pre-line;
+				color: #555;
+				font-size: 16px;
+				line-height: 30px !important;
+				text-align: justify;
 			}
 		}
 

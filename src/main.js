@@ -11,6 +11,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css'; // Use for Bootstrap-icons
 
 import { createPinia } from 'pinia'; // Use Pinia
 
+import CKEditor from '@ckeditor/ckeditor5-vue'; // Use CKEditor
+
 const pinia = createPinia();
 
 // Test Vuex
@@ -33,6 +35,9 @@ myApp.use(pinia);
 
 // Test Vuex
 myApp.use(store);
+
+// Use CKEditor
+myApp.use(CKEditor);
 
 // Mount
 myApp.mount('#app');

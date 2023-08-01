@@ -6,6 +6,14 @@
 			:is-loading-page="isPageLoadingData"
 		>
 
+			<template #leftSide>
+				<core-shortcut-list
+					:list="pageData.unitContentList"
+					id-string="knowledgeArticleContentUnitId"
+					title-string="title"
+				></core-shortcut-list>
+			</template>
+
 			<template #centerSide>
 
 				<div
@@ -25,6 +33,7 @@
 					<template #transition-content-side>
 						<core-content
 							v-if="pageData.title"
+							:is-label-master="true"
 							label="Tên bài viết"
 						>
 							<template #content-side>
@@ -112,23 +121,6 @@
 								>
 							</template>
 						</core-form-input>
-
-						<core-form-input
-							label="Choose File"
-							:error="getInputErrorByKey('title')"
-						>
-							<template #input-side>
-								<input
-									@change="onImageChange"
-									type="file"
-									placeholder="Nhập text"
-								>
-							</template>
-						</core-form-input>
-
-						<div class="core-app-style__container" v-if="pageData.image">
-							<img :src="pageData.image" class="img-responsive" height="70" width="90"/>
-						</div>
 
 					</template>
 
@@ -284,22 +276,6 @@ export default {
 
 		onGoAddKnowledgeArticleUnitPage() {
 			this.$router.push({ name: 'knowledge_article_content_unit_detail', query: { actionMode: 'new', knowledgeArticleId: this.id}})
-		},
-
-		onImageChange(e) {
-			let files = e.target.files || e.dataTransfer.files;
-			if (!files.length)
-				return;
-			this.createImage(files[0]);
-		},
-
-		createImage(file) {
-			let reader = new FileReader();
-
-			reader.onload = (e) => {
-				this.pageData.image = e.target.result;
-			};
-			reader.readAsDataURL(file);
 		},
 	}
 }

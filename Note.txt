@@ -1,0 +1,2 @@
+CKEditor:
+https://ckeditor.com/docs/ckeditor5/latest/installation/integrations/vuejs-v3.html#using-es6-modules

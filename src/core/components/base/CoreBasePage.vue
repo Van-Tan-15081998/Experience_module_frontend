@@ -16,6 +16,7 @@ import CoreGroupContent from "@/core/components/group-content/CoreGroupContent.v
 import CoreFormCheckbox from "@/core/components/form-checkbox/CoreFormCheckbox.vue";
 import CoreModal from "@/core/components/modal/CoreModal.vue";
 import CoreFormTextArea from "@/core/components/form-textarea/CoreFormTextarea.vue";
+import CoreShortcutList from "@/core/components/shortcut-list/CoreShortcutList.vue";
 
 export default {
 	name: 'CoreBasePage',
@@ -32,7 +33,8 @@ export default {
 		CoreGroupContent,
 		CoreFormCheckbox,
 		CoreModal,
-		CoreFormTextArea
+		CoreFormTextArea,
+		CoreShortcutList
 	},
 	data() {
 		return {
