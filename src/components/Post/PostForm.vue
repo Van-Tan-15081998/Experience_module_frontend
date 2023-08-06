@@ -71,7 +71,6 @@
         methods: {
             onSubmit() {
                 this.save();
-                console.log('Submit');
             },
         }
     }

@@ -83,7 +83,7 @@ export default {
 		}
 	},
 	mounted() {
-		console.log('___Subject New Page')
+
 	}
 }
 </script>

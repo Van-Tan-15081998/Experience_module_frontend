@@ -192,9 +192,9 @@ export default {
 		},
 
 		onDeletePublisher(index) {
-			console.log(index)
+
 			this.formData.publisherList.splice(index, 1);
-			console.log(this.formData.publisherList)
+
 		}
 	}
 }

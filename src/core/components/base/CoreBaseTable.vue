@@ -148,12 +148,10 @@
 
 			openAddForm(data = null) {
 				this.isOpenAddForm = true;
-				console.log(data);
 			},
 			openEditForm(itemId = null) {
 				this.itemId = itemId;
 				this.isOpenEditForm = true;
-				console.log(itemId);
 			},
 			openDetailForm(itemId = null) {
 				this.itemId = itemId;

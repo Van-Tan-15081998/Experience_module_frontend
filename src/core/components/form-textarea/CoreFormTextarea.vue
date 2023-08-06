@@ -61,6 +61,27 @@
 								Para
 							</div>
 						</div>
+						<div
+							@click="onChooseTextStructure('text_structure_style_28')"
+							class="item">
+							<div class="text_structure_style_28">
+								Para
+							</div>
+						</div>
+						<div
+							@click="onChooseTextStructure('text_structure_style_29')"
+							class="item">
+							<div class="text_structure_style_29">
+								Para
+							</div>
+						</div>
+						<div
+							@click="onChooseTextStructure('text_structure_style_30')"
+							class="item">
+							<div class="text_structure_style_30">
+								Para
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -248,7 +269,6 @@ export default {
 	},
 	methods: {
 		onChooseTextStructure(textStructureStyle) {
-			console.log(textStructureStyle);
 			this.$emit('onChangeTextStructure', textStructureStyle);
 		},
 		onAddImageOnline() {
@@ -356,7 +376,10 @@ export default {
 					.text_structure_style_24,
 					.text_structure_style_25,
 					.text_structure_style_26,
-					.text_structure_style_27 {
+					.text_structure_style_27,
+					.text_structure_style_28,
+					.text_structure_style_29,
+					.text_structure_style_30 {
 						text-align: center;
 						width: 100%;
 						height: 100%;
@@ -429,6 +452,21 @@ export default {
 						color: #2D2D2D;
 						background-color: transparent;
 						border: 1px dashed #555555;
+					}
+
+					.text_structure_style_28 {
+						color: #2D2D2D;
+						background-color: #F4A460;
+					}
+
+					.text_structure_style_29 {
+						color: #2D2D2D;
+						background-color: #00FA9A;
+					}
+
+					.text_structure_style_30 {
+						color: #2D2D2D;
+						background-color: #D8BFD8;
 					}
 				}
 			}

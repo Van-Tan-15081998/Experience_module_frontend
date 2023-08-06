@@ -91,7 +91,6 @@ export default {
       })
 
       if(!dataObj) {
-        console.log('fall')
         return;
       }
 

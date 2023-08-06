@@ -86,9 +86,7 @@ export default {
   },
   inject: ['apiService'],
   setup() {
-    // this.getList();
 
-    // console.log(this.books);
   },
   created() {
     this.getList();
@@ -165,7 +163,6 @@ export default {
       let dataObj = await bookApi.getList(this, {});
 
       if(!dataObj) {
-        console.log('fall');
         this.tableLoading = false;
         return;
       }

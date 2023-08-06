@@ -133,7 +133,7 @@ export default {
 	watch: {
 		'itemId' (value) {
 			if(value) {
-				console.log(value)
+
 				this.id = value;
 			}
 		}

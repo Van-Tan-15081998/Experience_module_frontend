@@ -562,9 +562,11 @@ body {
                 img {
                     width: 100% !important;
                     height: auto !important;
-                    border-radius: 5px;
-                    border: 1px solid #979797;
+                    border-radius: 10px;
+                    //border: 1px solid #979797;
                     box-sizing: border-box;
+
+                    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
                 }
             }
 
@@ -645,6 +647,7 @@ body {
                     width: fit-content;
                     border-radius: 4px;
                     user-select: none;
+                    margin-bottom: 2px;
                 }
 
                 &.text_structure_style_1 {
@@ -731,7 +734,10 @@ body {
                 &.text_structure_style_24,
                 &.text_structure_style_25,
                 &.text_structure_style_26,
-                .text_structure_style_27 {
+                &.text_structure_style_27,
+                &.text_structure_style_28,
+                &.text_structure_style_29,
+                &.text_structure_style_30{
                     display: block;
                     text-align: left;
                     font-weight: inherit;
@@ -740,6 +746,8 @@ body {
                     border-radius: 4px;
                     user-select: none;
                     padding: 4px 4px;
+
+                    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
                 }
 
                 &.text_structure_style_20 {
@@ -777,10 +785,26 @@ body {
                     background-color: #DCDCDC;
                 }
 
-                .text_structure_style_27 {
+                &.text_structure_style_27 {
                     color: #2D2D2D;
                     background-color: transparent;
                     border: 1px dashed #555555;
+                }
+
+                &.text_structure_style_28 {
+                    color: #2D2D2D;
+                    background-color: #F4A460;
+                    border: 1px dashed #555555;
+                }
+
+                &.text_structure_style_29 {
+                    color: #2D2D2D;
+                    background-color: #00FA9A;
+                }
+
+                &.text_structure_style_30 {
+                    color: #2D2D2D;
+                    background-color: #D8BFD8;
                 }
             }
 

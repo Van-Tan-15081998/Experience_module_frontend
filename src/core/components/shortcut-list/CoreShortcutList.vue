@@ -46,7 +46,6 @@ export default {
 
 	methods: {
 		goto(address = '') {
-			console.log(address)
 			this.exEventBus.emit(
 				'SHORTCUT_GOTO_DETAIL',
 				address
@@ -68,8 +67,8 @@ export default {
 		cursor: pointer;
 		user-select: none;
 		border: 1px solid #626262;
-		border-top-left-radius: 20px;
-		border-bottom-left-radius: 20px;
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
 		border-right: none;
 		color: lightgrey;
 		transition: 0.1s;

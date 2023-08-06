@@ -100,7 +100,6 @@ export default {
                     url,
                     params)
                 .then((apiResponse) => {
-                    console.log(url)
                     let dataObj = {
                         isSucceeded: null,
                         inputErrors: [],

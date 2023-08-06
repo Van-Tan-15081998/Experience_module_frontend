@@ -189,7 +189,6 @@ export default {
   methods: {
     parsePaginationData() {
 			this.paginationDataParsed = [];
-			console.log('parsePaginationData')
       if(this.paginationInfo.totalPages > 0) {
         for(let i = 1; i <= this.paginationInfo.totalPages; i++) {
           let itemPage = {
@@ -272,19 +271,19 @@ export default {
     },
 
     gotoPageNumber() {
-			console.log('gotoPageNumber');
+
     },
     gotoFirstPage() {
-			console.log('gotoFirstPage');
+
     },
     gotoPreviousPage() {
-			console.log('gotoPreviousPage');
+
     },
     gotoNextPage() {
-			console.log('gotoNextPage');
+
     },
     gotoLastPage() {
-			console.log('gotoLastPage');
+
     },
   }
 }

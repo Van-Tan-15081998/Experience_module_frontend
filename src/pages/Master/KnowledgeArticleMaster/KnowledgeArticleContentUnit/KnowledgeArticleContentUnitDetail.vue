@@ -69,6 +69,25 @@
 								:editor="editor" v-model="CKEditorContent" :config="editorConfig">
 
 							</ckeditor>
+
+							<button
+								@click="copyContentCKEditor"
+								class="core-app-style__button full-width-size blue-harmony-color icon-effect-zoom-in"
+							>
+								<i class="bi bi-files"></i>
+								Copy
+							</button>
+
+							<div class="input_wrapper">
+								<div class="input_validator">
+									<textarea
+										v-model="CKEditorContent"
+										rows="15"
+										disabled
+									>
+									</textarea>
+								</div>
+							</div>
 						</div>
 
 						<div
@@ -417,7 +436,6 @@ export default {
 
 			this.textStructureForChange = selectedText;
 			this.textStructureForChangePositionStart = inputElement.selectionStart;
-			console.log(this.textStructureForChange,this.textStructureForChangePositionStart);
 		},
 
 		onChangeTextStructure(textStructureStyle) {
@@ -427,20 +445,15 @@ export default {
 				// Change one time at detail position
 				this.pageData.unitContent = this.pageData.unitContent.slice(0, this.textStructureForChangePositionStart) +
 																			replacement + this.pageData.unitContent.slice(this.textStructureForChangePositionStart + this.textStructureForChange.length);
-				console.log(this.pageData.unitContent);
-				// Change all match
-				// let parts = this.pageData.unitContent.split(this.textStructureForChange);
-				// this.pageData.unitContent = parts.join(replacement);
+
 			}
 		},
 
 		getCursorPosition(event) {
 			this.cursorPosition = event.target.selectionStart;
-			console.log(this.cursorPosition);
 		},
 
 		onAddImageOnline(imageSourceOnline) {
-			console.log(imageSourceOnline)
 			if (this.pageData.unitContent && this.pageData.unitContent !== '' && this.cursorPosition) {
 
 				let imageFigure = '<figure class="image"><img src="' + imageSourceOnline  + '"></figure>';
@@ -449,6 +462,12 @@ export default {
 				const textAfterCursor = this.pageData.unitContent.slice(this.cursorPosition);
 
 				this.pageData.unitContent = textBeforeCursor + imageFigure + textAfterCursor;
+			}
+		},
+
+		copyContentCKEditor() {
+			if (this.CKEditorContent !== '') {
+				navigator.clipboard.writeText(this.CKEditorContent);
 			}
 		}
 	}

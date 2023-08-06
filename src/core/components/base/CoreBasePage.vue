@@ -60,7 +60,6 @@ export default {
 		}
 	},
 	mounted() {
-		console.log('___Core Base Page')
 		this.initPage();
 	},
 	watch: {
@@ -187,8 +186,6 @@ export default {
 				// Nếu save thành công
 				if(dataObj.data) {
 					this.parsePageData(dataObj.data.data);
-
-					console.log('save thành công')
 					this.onGoViewPage();
 				}
 
@@ -203,8 +200,6 @@ export default {
 
 		parseRouteParams() {
 			let routeQueryParams = this.$route.query;
-
-			console.log(routeQueryParams)
 
 			if(!isEmpty(routeQueryParams)) {
 				if(routeQueryParams.actionMode && (routeQueryParams.actionMode === 'new' || routeQueryParams.actionMode === 'edit' || routeQueryParams.actionMode === 'view')) {
@@ -221,7 +216,6 @@ export default {
 					// Parse page data - nếu có
 					if(this.pageData) {
 						Object.keys(this.pageData).forEach((key) => {
-							console.log(key)
 							if(routeQueryParams[key] !== null && routeQueryParams[key] !== undefined) {
 								this.pageData[key] = routeQueryParams[key];
 							}

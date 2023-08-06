@@ -222,7 +222,7 @@
                 if(this.paginationData.totalItems > 0) {
                     this.paginationData.activePageNumber = 1;
                     let subtract = this.paginationData.pageLinkItems.pages[0].numberPage - 1;
-                    console.log('A', subtract)
+
                     if(subtract > 0) {
                         this.paginationData.pageLinkItems.pages.forEach((element) => {
                             element.numberPage -= subtract;
@@ -240,7 +240,7 @@
             },
             gotoPreviousPage() {
                 if(this.paginationData.totalItems > 0) {
-                    console.log('gotoPreviousPage');
+
                     if (this.paginationData.activePageNumber > 1) {
                         this.paginationData.activePageNumber--;
 
@@ -264,7 +264,7 @@
             },
             gotoNextPage() {
                 if(this.paginationData.totalItems > 0) {
-                    console.log('gotoNextPage');
+
                     if (this.paginationData.activePageNumber < this.paginationData.totalPages) {
                         this.paginationData.activePageNumber++;
 
@@ -290,7 +290,7 @@
                 if(this.paginationData.totalItems > 0) {
                     this.paginationData.activePageNumber = this.paginationData.totalPages;
                     let add = this.paginationData.totalPages - this.paginationData.pageLinkItems.pages[this.paginationData.pageLinkItems.pages.length-1].numberPage;
-                    console.log('A', add)
+
                     if(add > 0) {
                         this.paginationData.pageLinkItems.pages.forEach((element) => {
                             element.numberPage += add;

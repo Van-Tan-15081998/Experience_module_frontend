@@ -38,7 +38,6 @@
 		watch: {
 			'id' (value) {
 				if(value) {
-					console.log('id')
 					this.initFormData();
 				}
 			}
@@ -69,7 +68,6 @@
 		},
 		methods: {
 			initFormData() {
-				console.log('initFormData')
 				this.isLoadingFormData = true;
 
 				//-----Get data form-----//
@@ -77,17 +75,14 @@
 
 			},
 			async loadFormData() {
-				console.log('loadFormData')
 				if(this.loadFormDataService && this.context) {
 					this.isLoadingFormData = true
 
 					let dataObj = null;
 
 					if(this.isAddForm) {
-						console.log('loadFormData isAddForm')
 						dataObj = await this.loadFormDataService.getDetailData(this.context, '?actionMode=' + this.getMode, {});
 					} else if((this.isEditForm || this.isDetailForm) && this.id) {
-						console.log('loadFormData isEditForm isDetailForm')
 						dataObj = await this.loadFormDataService.getDetailData(this.context, '?bookId=' + this.id + '&actionMode=' + this.getMode, {});
 					}
 
@@ -135,7 +130,6 @@
 			},
 			getInputErrorByKey(key) {
 				if(this.inputErrors && key.toString() !== '' && this.inputErrors[key]) {
-					console.log(this.inputErrors[key][0])
 					return this.inputErrors[key][0];
 				}
 				return '';
@@ -181,7 +175,6 @@
 					this.statuses = dataObj.alerts;
 				}
 
-				console.log(this.statuses)
 				this.isLoadingProcessing = false;
 
 				this.toTopForm();
@@ -208,8 +201,6 @@
 						}
 					})
 				}
-
-				console.log(this.formData);
 			},
 
 			resetAlert() {
@@ -232,7 +223,6 @@
 			},
 
 			toTopForm() {
-				console.log('toTopForm')
 				this.exEventBus.emit('TO_TOP_FORM', null);
 			}
 		}

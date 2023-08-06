@@ -471,7 +471,6 @@ export default {
 
 	},
 	mounted() {
-		console.log('___Subject New Page')
 	},
 	data() {
 		return {
@@ -528,8 +527,6 @@ export default {
 	},
 	methods: {
 		onDeleteParentSubject(index) {
-			// this.pageData.parentSubjectList.splice(index, 1);
-			console.log('onDeleteParentSubject', index, this.pageData.parentSubjectList)
 			if (this.pageData.parentSubjectList[index]) {
 
 				if(this.pageData.parentSubjectList[index]['subjectBranchSubjectId']) {
@@ -552,15 +549,12 @@ export default {
 		},
 
 		onDeleteBranchSubject(index) {
-			// this.pageData.branchSubjectList.splice(index, 1);
-			console.log('onDeleteBranchSubject', index, this.pageData.branchSubjectList[index])
 			if (this.pageData.branchSubjectList[index]) {
 
 				if(this.pageData.branchSubjectList[index]['subjectBranchSubjectId']) {
 					this.pageData.removeBranchSubjectList.push(
 						this.pageData.branchSubjectList[index]
 					)
-					console.log('onDeleteBranchSubject', this.pageData.branchSubjectList[index])
 				}
 
 				this.pageData.branchSubjectList.splice(index, 1);

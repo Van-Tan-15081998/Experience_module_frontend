@@ -28,7 +28,6 @@ class ApiService {
     }
 
     callApiGet(api) {
-        console.log(ApiConstants.API_ROOT_URL + api)
         return axios
             .get(ApiConstants.API_ROOT_URL + api, {
                 headers: this.authHeader()
@@ -37,7 +36,7 @@ class ApiService {
                 return res.data;
             })
             .catch(err => {
-                console.log(err);
+
             });
     }
 

@@ -38,7 +38,6 @@ export default {
 			this.selected = val
 		},
 		selected (val) {
-			console.log('change', val)
 			this.$emit('input', val)
 			return this.$emit('change', val)
 		}

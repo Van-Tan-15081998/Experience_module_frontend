@@ -34,7 +34,7 @@ export default {
     users: null
   },
   beforeMount() {
-    // console.log(this.$slots)
+
   }
 }
 </script>

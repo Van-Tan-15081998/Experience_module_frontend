@@ -73,13 +73,8 @@
             }
         },
         created() {
-            console.log(this.isOpenForm);
             this.items = testingData.data;
             this.parsedPostData();
-
-            this.exEventBus.on('TEST_EVENT', (data) => {
-                console.log('EVENT DATA', data)
-            } )
         },
         methods: {
             parsedPostData() {

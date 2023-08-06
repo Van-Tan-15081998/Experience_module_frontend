@@ -188,9 +188,7 @@ export default {
 		}
 	},
 	watch: {
-		// 'formData.removePublisherList' (value) {
-		// 	console.log(value);
-		// }
+
 	},
 	methods: {
 		onAddPublisher() {
@@ -209,7 +207,7 @@ export default {
 					this.formData.removePublisherList.push(
 						this.formData.publisherList[index]
 					)
-					console.log(this.formData.removePublisherList)
+
 				}
 
 				this.formData.publisherList.splice(index, 1);
