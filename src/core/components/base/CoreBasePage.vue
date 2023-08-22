@@ -18,6 +18,8 @@ import CoreModal from "@/core/components/modal/CoreModal.vue";
 import CoreFormTextArea from "@/core/components/form-textarea/CoreFormTextarea.vue";
 import CoreShortcutList from "@/core/components/shortcut-list/CoreShortcutList.vue";
 
+import {isEqual} from 'lodash';
+
 export default {
 	name: 'CoreBasePage',
 	components: {
@@ -45,6 +47,9 @@ export default {
 
 			isPageLoadingData: true,
 			isPageReloadingData: false,
+
+      isPageLoadedData: false,
+
 			pageData: null,
 			pageDataCopy: null,
 			selectionItemsPageData: null,
@@ -56,6 +61,10 @@ export default {
 			inputErrors: [],
 			statuses: [],
 
+      rootFilterProperties: null,
+      filterProperties: null,
+      isFiltering: false,
+
 			isOpenConfirmDeleteModal: false
 		}
 	},
@@ -63,22 +72,53 @@ export default {
 		this.initPage();
 	},
 	watch: {
+    filterProperties: {
+      handler (newValue) {
+        // Gán giá trị cho rootFilterProperties
+        if(this.rootFilterProperties === null && newValue !== null) {
+          this.rootFilterProperties = newValue;
+        }
+
+        // Khi filterProperties thay đổi so với rootFilterProperties => isFiltering = true
+        if(!isEqual(newValue, this.rootFilterProperties)) {
+          this.isFiltering = true;
+        } else {
+          this.isFiltering = false;
+        }
+      },
+      deep: true
+    },
 		actionMode: {
-			handler () {
-				if(this.dataService && this.context) {
-					this.initPage();
-				}
+			handler (newValue, oldValue) {
+				if(oldValue !== null) {
+          if(this.dataService && this.context) {
+            this.initPage();
+
+            this.resetPageData();
+          }
+        }
 			},
 			deep: true
 		},
-		routeParamComputed: {
-			handler (value) {
-				if(value && this.dataService && this.context) {
-					this.initPage();
-				}
-			},
-			deep: true
-		},
+    routeComputed: {
+      handler (newValue, oldValue) {
+        if(newValue.path === oldValue.path && !isEqual(newValue.query, oldValue.query) && isEqual(newValue.query.actionMode, oldValue.query.actionMode)) {
+          // Chỉ áp dụng cho filter
+          if(this.isFiltering) {
+            if(this.dataService && this.context) {
+              this.initPage();
+            }
+          }
+        }
+
+        if(newValue.path === oldValue.path  && (!isEqual(newValue.query.actionMode, oldValue.query.actionMode) || !isEqual(newValue.query.id, oldValue.query.id))) {
+          if(this.dataService && this.context) {
+            this.initPage();
+          }
+        }
+      },
+      deep: true
+    },
 	},
 	computed: {
 		isShowStatuses() {
@@ -99,9 +139,9 @@ export default {
 		isActionModeEdit() {
 			return this.actionMode === 'edit';
 		},
-		routeParamComputed() {
-			return this.$route.query;
-		}
+    routeComputed() {
+      return this.$route;
+    }
 	},
 	methods: {
 		initPage() {
@@ -158,7 +198,6 @@ export default {
 		},
 
 		async save() {
-
 			this.resetAlert();
 			this.isPageLoadingData = true;
 
@@ -195,10 +234,12 @@ export default {
 				}
 
 				this.isPageLoadingData = false;
+
 			}
 		},
 
 		parseRouteParams() {
+
 			let routeQueryParams = this.$route.query;
 
 			if(!isEmpty(routeQueryParams)) {
@@ -288,6 +329,10 @@ export default {
 
 		initDefaultData() {
 		},
+
+    resetPageData() {
+      this.resetAlert();
+    },
 
 		resetAlert() {
 			this.resetInputErrors();

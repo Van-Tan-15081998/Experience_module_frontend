@@ -40,20 +40,52 @@
 						</core-form-input>
 
 						<core-form-text-area
-							label="Nội dung"
+							label="Nội dung chính"
 							:error="getInputErrorByKey('content')"
-							@onChangeTextStructure="(textStructureStyle) => onChangeTextStructure(textStructureStyle)"
-							@onAddImageOnline="(imageSourceOnline) => onAddImageOnline(imageSourceOnline)"
+							@onChangeTextStructure="(textStructureStyle) => onChangeTextStructure(textStructureStyle,'unitContent')"
+							@onAddImageOnline="(imageSourceOnline) => onAddImageOnline(imageSourceOnline,'unitContent')"
 						>
 							<template #input-side>
 								<textarea
 									v-model="pageData.unitContent"
 									rows="15"
-									@select="onChooseTextStructure"
+									@select="onChooseTextStructure($event,'unitContent')"
 									@click="getCursorPosition"
 								></textarea>
 							</template>
 						</core-form-text-area>
+
+            <core-form-text-area
+                label="Nội dung Right Side"
+                :error="getInputErrorByKey('content')"
+                @onChangeTextStructure="(textStructureStyle) => onChangeTextStructure(textStructureStyle,'unitContentRightSide')"
+                @onAddImageOnline="(imageSourceOnline) => onAddImageOnline(imageSourceOnline,'unitContentRightSide')"
+            >
+              <template #input-side>
+								<textarea
+                    v-model="pageData.unitContentRightSide"
+                    rows="15"
+                    @select="onChooseTextStructure($event,'unitContentRightSide')"
+                    @click="getCursorPosition"
+                ></textarea>
+              </template>
+            </core-form-text-area>
+
+            <core-form-text-area
+                label="Nội dung Left Side"
+                :error="getInputErrorByKey('content')"
+                @onChangeTextStructure="(textStructureStyle) => onChangeTextStructure(textStructureStyle,'unitContentLeftSide')"
+                @onAddImageOnline="(imageSourceOnline) => onAddImageOnline(imageSourceOnline,'unitContentLeftSide')"
+            >
+              <template #input-side>
+								<textarea
+                    v-model="pageData.unitContentLeftSide"
+                    rows="15"
+                    @select="onChooseTextStructure($event,'unitContentLeftSide')"
+                    @click="getCursorPosition"
+                ></textarea>
+              </template>
+            </core-form-text-area>
 
 						<button
 							@click="isEnableCKEditor = !isEnableCKEditor"
@@ -184,20 +216,52 @@
 						</core-form-input>
 
 						<core-form-text-area
-							label="Nội dung"
+							label="Nội dung chính"
 							:error="getInputErrorByKey('content')"
-							@onChangeTextStructure="(textStructureStyle) => onChangeTextStructure(textStructureStyle)"
-							@onAddImageOnline="(imageSourceOnline) => onAddImageOnline(imageSourceOnline)"
+							@onChangeTextStructure="(textStructureStyle) => onChangeTextStructure(textStructureStyle,'unitContent')"
+							@onAddImageOnline="(imageSourceOnline) => onAddImageOnline(imageSourceOnline,'unitContent')"
 						>
 							<template #input-side>
 								<textarea
 									v-model="pageData.unitContent"
 									rows="15"
-									@select="onChooseTextStructure"
+									@select="onChooseTextStructure($event,'unitContent')"
 									@click="getCursorPosition"
 								></textarea>
 							</template>
 						</core-form-text-area>
+
+            <core-form-text-area
+                label="Nội dung Right Side"
+                :error="getInputErrorByKey('content')"
+                @onChangeTextStructure="(textStructureStyle) => onChangeTextStructure(textStructureStyle,'unitContentRightSide')"
+                @onAddImageOnline="(imageSourceOnline) => onAddImageOnline(imageSourceOnline,'unitContentRightSide')"
+            >
+              <template #input-side>
+								<textarea
+                    v-model="pageData.unitContentRightSide"
+                    rows="15"
+                    @select="onChooseTextStructure($event,'unitContentRightSide')"
+                    @click="getCursorPosition"
+                ></textarea>
+              </template>
+            </core-form-text-area>
+
+            <core-form-text-area
+                label="Nội dung Left Side"
+                :error="getInputErrorByKey('content')"
+                @onChangeTextStructure="(textStructureStyle) => onChangeTextStructure(textStructureStyle,'unitContentLeftSide')"
+                @onAddImageOnline="(imageSourceOnline) => onAddImageOnline(imageSourceOnline,'unitContentLeftSide')"
+            >
+              <template #input-side>
+								<textarea
+                    v-model="pageData.unitContentLeftSide"
+                    rows="15"
+                    @select="onChooseTextStructure($event,'unitContentLeftSide')"
+                    @click="getCursorPosition"
+                ></textarea>
+              </template>
+            </core-form-text-area>
 
 						<button
 							@click="isEnableCKEditor = !isEnableCKEditor"
@@ -319,6 +383,32 @@
 					</template>
 				</core-transition-content>
 
+        <core-transition-content>
+          <template #transition-content-side>
+            <core-content
+                v-if="pageData.unitContentRightSide"
+                label="Nội dung Unit Content Right Side"
+            >
+              <template #content-side>
+                <div class="show_content_html_format" v-html="pageData.unitContentRightSide"></div>
+              </template>
+            </core-content>
+          </template>
+        </core-transition-content>
+
+        <core-transition-content>
+          <template #transition-content-side>
+            <core-content
+                v-if="pageData.unitContentLeftSide"
+                label="Nội dung Unit Content Left Side"
+            >
+              <template #content-side>
+                <div class="show_content_html_format" v-html="pageData.unitContentLeftSide"></div>
+              </template>
+            </core-content>
+          </template>
+        </core-transition-content>
+
 			</template>
 
 		</core-page-template>
@@ -355,7 +445,11 @@ export default {
 				knowledgeArticleId: null,
 
 				title: null,
+
 				unitContent: null,
+        unitContentRightSide: null,
+        unitContentLeftSide: null,
+
 				imageList: [],
 
 				knowledgeArticleContentUnitId: null // For Edit Page
@@ -367,19 +461,6 @@ export default {
 
 			editor: ClassicEditor,
 			editorConfig: {
-				// The configuration of the editor.
-
-				// toolbar: {
-				// 	items: [
-				// 		'bold',
-				// 		'italic',
-				// 		'link',
-				// 		'undo',
-				// 		'redo',
-				// 		'table'
-				// 	]
-				// },
-
 				toolbar: {
 					items: [
 						'heading',
@@ -430,39 +511,99 @@ export default {
 			reader.readAsDataURL(file);
 		},
 
-		onChooseTextStructure(event) {
+		onChooseTextStructure(event, targetObject) {
 			const inputElement = event.target;
-			let selectedText = this.pageData.unitContent.substring(inputElement.selectionStart, inputElement.selectionEnd);
+
+      let selectedText = '';
+
+      if(targetObject === 'unitContent') {
+        selectedText = this.pageData.unitContent.substring(inputElement.selectionStart, inputElement.selectionEnd);
+      }
+      if(targetObject === 'unitContentRightSide') {
+        selectedText = this.pageData.unitContentRightSide.substring(inputElement.selectionStart, inputElement.selectionEnd);
+      }
+      if(targetObject === 'unitContentLeftSide') {
+        selectedText = this.pageData.unitContentLeftSide.substring(inputElement.selectionStart, inputElement.selectionEnd);
+      }
 
 			this.textStructureForChange = selectedText;
 			this.textStructureForChangePositionStart = inputElement.selectionStart;
 		},
 
-		onChangeTextStructure(textStructureStyle) {
-			if(this.pageData.unitContent && this.pageData.unitContent !== '' && this.textStructureForChange !== '' && this.textStructureForChangePositionStart !== null) {
-				let replacement = '<span class="' + textStructureStyle + '">' + this.textStructureForChange + '</span>';
+		onChangeTextStructure(textStructureStyle, targetObject) {
+      if(targetObject === 'unitContent') {
+        if(this.pageData.unitContent && this.pageData.unitContent !== '' && this.textStructureForChange !== '' && this.textStructureForChangePositionStart !== null) {
+          let replacement = '<span class="' + textStructureStyle + '">' + this.textStructureForChange + '</span>';
 
-				// Change one time at detail position
-				this.pageData.unitContent = this.pageData.unitContent.slice(0, this.textStructureForChangePositionStart) +
-																			replacement + this.pageData.unitContent.slice(this.textStructureForChangePositionStart + this.textStructureForChange.length);
+          // Change one time at detail position
+          this.pageData.unitContent = this.pageData.unitContent.slice(0, this.textStructureForChangePositionStart) +
+              replacement + this.pageData.unitContent.slice(this.textStructureForChangePositionStart + this.textStructureForChange.length);
 
-			}
+        }
+      }
+      if(targetObject === 'unitContentRightSide') {
+        if(this.pageData.unitContentRightSide && this.pageData.unitContentRightSide !== '' && this.textStructureForChange !== '' && this.textStructureForChangePositionStart !== null) {
+          let replacement = '<span class="' + textStructureStyle + '">' + this.textStructureForChange + '</span>';
+
+          // Change one time at detail position
+          this.pageData.unitContentRightSide = this.pageData.unitContentRightSide.slice(0, this.textStructureForChangePositionStart) +
+              replacement + this.pageData.unitContentRightSide.slice(this.textStructureForChangePositionStart + this.textStructureForChange.length);
+
+        }
+      }
+
+      if(targetObject === 'unitContentLeftSide') {
+        if(this.pageData.unitContentLeftSide && this.pageData.unitContentLeftSide !== '' && this.textStructureForChange !== '' && this.textStructureForChangePositionStart !== null) {
+          let replacement = '<span class="' + textStructureStyle + '">' + this.textStructureForChange + '</span>';
+
+          // Change one time at detail position
+          this.pageData.unitContentLeftSide = this.pageData.unitContentLeftSide.slice(0, this.textStructureForChangePositionStart) +
+              replacement + this.pageData.unitContentLeftSide.slice(this.textStructureForChangePositionStart + this.textStructureForChange.length);
+
+        }
+      }
 		},
 
 		getCursorPosition(event) {
 			this.cursorPosition = event.target.selectionStart;
 		},
 
-		onAddImageOnline(imageSourceOnline) {
-			if (this.pageData.unitContent && this.pageData.unitContent !== '' && this.cursorPosition) {
+		onAddImageOnline(imageSourceOnline, targetObject) {
+      if(targetObject === 'unitContent') {
+        if (this.pageData.unitContent && this.pageData.unitContent !== '' && this.cursorPosition) {
 
-				let imageFigure = '<figure class="image"><img src="' + imageSourceOnline  + '"></figure>';
+          let imageFigure = '<figure class="image"><img src="' + imageSourceOnline  + '"></figure>';
 
-				const textBeforeCursor = this.pageData.unitContent.slice(0, this.cursorPosition);
-				const textAfterCursor = this.pageData.unitContent.slice(this.cursorPosition);
+          const textBeforeCursor = this.pageData.unitContent.slice(0, this.cursorPosition);
+          const textAfterCursor = this.pageData.unitContent.slice(this.cursorPosition);
 
-				this.pageData.unitContent = textBeforeCursor + imageFigure + textAfterCursor;
-			}
+          this.pageData.unitContent = textBeforeCursor + imageFigure + textAfterCursor;
+        }
+      }
+
+      if(targetObject === 'unitContentRightSide') {
+        if (this.pageData.unitContentRightSide && this.pageData.unitContentRightSide !== '' && this.cursorPosition) {
+
+          let imageFigure = '<figure class="image"><img src="' + imageSourceOnline  + '"></figure>';
+
+          const textBeforeCursor = this.pageData.unitContentRightSide.slice(0, this.cursorPosition);
+          const textAfterCursor = this.pageData.unitContentRightSide.slice(this.cursorPosition);
+
+          this.pageData.unitContentRightSide = textBeforeCursor + imageFigure + textAfterCursor;
+        }
+      }
+
+      if(targetObject === 'unitContentLeftSide') {
+        if (this.pageData.unitContentRightSide && this.pageData.unitContentRightSide !== '' && this.cursorPosition) {
+
+          let imageFigure = '<figure class="image"><img src="' + imageSourceOnline  + '"></figure>';
+
+          const textBeforeCursor = this.pageData.unitContentRightSide.slice(0, this.cursorPosition);
+          const textAfterCursor = this.pageData.unitContentRightSide.slice(this.cursorPosition);
+
+          this.pageData.unitContentRightSide = textBeforeCursor + imageFigure + textAfterCursor;
+        }
+      }
 		},
 
 		copyContentCKEditor() {

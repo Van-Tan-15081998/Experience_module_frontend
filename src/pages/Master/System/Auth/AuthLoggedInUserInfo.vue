@@ -23,11 +23,12 @@
 
 <script>
 import {useAuthStore} from "@/store/System/AuthStore";
+import authApi from "@/scripts/Master/System/Auth/AuthApi";
 // import authApi from "@/scripts/Master/System/Auth/AuthApi";
 
 export default {
   name: "AuthLoggedInUserInfo",
-  // inject: ['apiService'],
+  inject: ['apiService'],
   setup() {
     const authStore = useAuthStore();
 
@@ -36,11 +37,11 @@ export default {
     }
   },
   mounted() {
-    if(this.authStore.getIsAuthenticated) {
-      const redirect = { name: 'auth/auth-login' };
-
-      this.$router.push(redirect);
-    }
+    // if(this.authStore.getIsAuthenticated) {
+    //   const redirect = { name: 'auth/auth-login' };
+    //
+    //   this.$router.push(redirect);
+    // }
   },
   data() {
     return {
@@ -50,7 +51,24 @@ export default {
   },
   methods: {
     async onLogout() {
+      this.loading = true;
 
+      let dataObj = await authApi.logout(this, {})
+
+      if(!dataObj) {
+        return;
+      }
+
+      if(dataObj.isSucceeded) {
+        console.log('logout', dataObj.isSucceeded)
+        this.authStore.logout();
+
+        this.loading = false;
+
+        const redirect = { name: 'auth/auth-login' };
+
+        this.$router.push(redirect);
+      }
     }
   }
 }

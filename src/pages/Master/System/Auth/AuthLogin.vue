@@ -57,6 +57,7 @@
 <script>
 import authApi from "@/scripts/Master/System/Auth/AuthApi";
 import { useAuthStore } from "@/store/System/AuthStore";
+import {mapState} from "pinia/dist/pinia";
 export default {
   name: 'AuthLogin',
   inject: ['apiService'],
@@ -68,9 +69,8 @@ export default {
     }
   },
   mounted() {
-    if(this.authStore.checkLogin()) {
+    if(this.getIsAuthenticated) {
       const redirect = { name: 'auth/auth-logged-in-user-info' };
-
       this.$router.push(redirect);
     }
   },
@@ -80,6 +80,12 @@ export default {
       userName: 'systemmanager',
       password: '123456'
     }
+  },
+  watch: {
+
+  },
+  computed: {
+    ...mapState(useAuthStore, ['getIsAuthenticated']),
   },
   methods: {
     async onLogin() {
@@ -95,21 +101,26 @@ export default {
       }
 
       if(dataObj.data.token) {
-        this.authStore.login(
-            this.userName,
-            this.password,
-            dataObj.data.token
-        )
+        console.log('login', dataObj.data.token)
 
-        localStorage.setItem('logged-user-info', JSON.stringify({
-          token: dataObj.data.token,
-        }))
+        localStorage.setItem('logged-user-info', dataObj.data.token);
+        let tokenFromLocalStorage = localStorage.getItem('logged-user-info');
 
-        this.loading = false;
+        if(tokenFromLocalStorage !== '') {
+          this.authStore.login(
+              this.userName,
+              this.password,
+              dataObj.data.token
+          )
 
-        const redirect = this.$route.query.redirect || { name: 'auth/auth-logged-in-user-info' };
+          this.loading = false;
 
-        this.$router.push(redirect);
+          if(this.authStore.getIsAuthenticated) {
+            const redirect = { name: 'auth/auth-logged-in-user-info' };
+
+            this.$router.push(redirect);
+          }
+        }
       }
     }
   }

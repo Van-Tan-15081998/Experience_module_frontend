@@ -18,34 +18,24 @@
 		</div>
 		<div class="main-body">
 			<div class="left">
-				<div class="images">
-
-					<div v-if="data.imageList">
-						<div
-							v-for="(item, index) in data.imageList"
-							:key="index"
-							class="image">
-							<div class="core-app-style__container full-size">
-								<img class="core-img-responsive" :src="'http://192.168.1.4:8000/' + item.imageSource" alt="">
-							</div>
-							<p class="image-title">Ảnh 1</p>
-						</div>
-					</div>
-
-				</div>
+        <div class="content">
+          <div
+              v-if="data.unitContentLeftSide"
+              class="content-detail" v-html="data.unitContentLeftSide"></div>
+        </div>
 			</div>
 
 			<div class="center">
 				<div class="content">
-<!--					{{ data.unitContent }}-->
-					<div v-html="data.unitContent"></div>
+					<div class="content-detail" v-html="data.unitContent"></div>
 				</div>
 			</div>
 
 			<div class="right">
-				<div class="related-content">
-					C
-				</div>
+        <div class="content">
+          <div v-if="data.unitContentRightSide"
+              class="content-detail" v-html="data.unitContentRightSide"></div>
+        </div>
 			</div>
 
 		</div>
@@ -100,6 +90,7 @@ export default {
 		width: 100%;
 		border-bottom: 1px solid #656565;
 		height: 50px;
+    margin-bottom: 10px;
 
 		display: flex;
 		flex-direction: row;
@@ -120,28 +111,45 @@ export default {
 		width: 100%;
 		display: flex;
 		flex-direction: row;
+    margin-bottom: 10px;
 
-		.left {
+		.left, .right {
 			width: 20%;
 
-			.images {
-				width: 100%;
-				padding: 5px 5px 0 0;
+      .content {
+        padding: 5px 10px;
+        background-color: #F5F6CF;
 
-				.image {
-					width: 100%;
-					display: flex;
-					flex-direction: column;
-					justify-content: flex-start;
-					align-items: center;
+        .content-detail {
+          white-space: pre-line;
+          color: #555;
+          font-size: 17px;
+          line-height: 30px !important;
+          text-align: justify;
+          font-weight: 500;
 
-					.image-title {
-						font-size: 15px;
-						margin-top: 2px;
-					}
-				}
-			}
+          letter-spacing: -0.3px;
+          font-family: "Open Sans", sans-serif;
+        }
+      }
 		}
+
+    .left {
+      padding: 0 10px 0 0;
+      .content {
+        overflow: hidden;
+        border-bottom-left-radius: 5px;
+        border-top-left-radius: 5px;
+      }
+    }
+    .right {
+      padding: 0 0 0 10px;
+      .content {
+        overflow: hidden;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+    }
 
 		.center {
 			width: 60%;
@@ -151,18 +159,22 @@ export default {
 			border-right: 1px dashed #656565;
 
 			.content {
+        height: 100%;
 				padding: 5px 10px;
 				background-color: #F5F6CF;
-				white-space: pre-line;
-				color: #555;
-				font-size: 16px;
-				line-height: 30px !important;
-				text-align: justify;
-			}
-		}
 
-		.right {
-			width: 20%;
+        .content-detail {
+          white-space: pre-line;
+          color: #555;
+          font-size: 17px;
+          line-height: 30px !important;
+          text-align: justify;
+          font-weight: 500;
+
+          letter-spacing: -0.3px;
+          font-family: "Open Sans", sans-serif;
+        }
+			}
 		}
 	}
 }

@@ -15,13 +15,14 @@ class ApiService {
     }
 
     authHeader() {
+        console.log('ApiService.store', this.store)
 
         let headers = {
             Accept: 'application/json'
         };
 
-        if (this.store && this.store.checkLogin()) {
-            headers.Authorization = 'Bearer ' + this.store.checkLogin();
+        if (this.store.token && this.store.getIsAuthenticated) {
+            headers.Authorization = 'Bearer ' + this.store.getUserToken;
         }
 
         return headers;
@@ -36,7 +37,7 @@ class ApiService {
                 return res.data;
             })
             .catch(err => {
-
+                console.log(err)
             });
     }
 

@@ -3,27 +3,80 @@
 		:class="{'expanded': contentListSideExpanded}"
 		class="core-transition-content-list-expand">
 		<div
-			@click="contentListSideExpanded = !contentListSideExpanded"
 			class="header-side">
 			<div class="header-title">
 				{{ title }}
 			</div>
 
-			<div class="btn-toggle-expand">
-				<i v-if="contentListSideExpanded" class="bi bi-caret-up-fill"></i>
-				<i v-else class="bi bi-caret-down-fill"></i>
-			</div>
+      <div>
+        <button
+            @click="contentListClass = 'sequential'"
+            class="core-app-style__button green-harmony-color icon-effect-zoom-in">
+          <i class="bi bi-list-columns-reverse"></i>
+        </button>
+        <button
+            @click="contentListClass = 'grid-one-column'"
+            class="core-app-style__button green-harmony-color icon-effect-zoom-in">
+          <i class="bi bi-view-stacked"></i>
+        </button>
+        <button
+            @click="contentListClass = 'grid-two-columns'"
+            class="core-app-style__button green-harmony-color icon-effect-zoom-in">
+          <i class="bi bi-grid-fill"></i>
+        </button>
+        <button
+            @click="contentListClass = 'grid-three-columns'"
+            class="core-app-style__button green-harmony-color icon-effect-zoom-in">
+          <i class="bi bi-grid-3x3-gap-fill"></i>
+        </button>
+        <button
+            @click="contentListClass = 'horizontal'"
+            class="core-app-style__button green-harmony-color icon-effect-zoom-in">
+          <i class="bi bi-layout-three-columns"></i>
+        </button>
+
+        <button
+            @click="contentListSideExpanded = !contentListSideExpanded"
+            class="core-app-style__button green-harmony-color icon-effect-zoom-in">
+          <i v-if="contentListSideExpanded" class="bi bi-caret-up-fill"></i>
+          <i v-else class="bi bi-caret-down-fill"></i>
+        </button>
+      </div>
 		</div>
 
 		<Transition name="content">
 
-			<div
-				v-if="contentListSideExpanded"
-				class="content-list-side">
-				<div class="content-side">
-					<slot name="contentListSide"></slot>
-				</div>
-			</div>
+<!--			<div-->
+<!--				v-if="contentListSideExpanded"-->
+<!--        :class="{'limit-height': contentListClass === 'horizontal'}"-->
+<!--				class="content-list-side">-->
+<!--				<div ref="contentListWrapper"-->
+<!--            @mousedown="scrollContent($event, 'mousedown')"-->
+<!--            @mouseleave="isMouseDown = false"-->
+<!--            @mouseup="isMouseDown = false"-->
+<!--            @mousemove="scrollContent($event, 'mousemove')"-->
+<!--            :class="contentListClass"-->
+<!--            class="content-list-wrapper">-->
+<!--					<slot name="contentListSide"></slot>-->
+<!--				</div>-->
+<!--			</div>-->
+
+      <div
+          v-if="contentListSideExpanded"
+          :class="{'limit-height': contentListClass === 'horizontal'}"
+          class="content-list-side"
+          ref="contentListSideRef"
+      >
+        <div ref="contentListWrapper"
+             :class="contentListClass"
+             class="content-list-wrapper"
+             :style="{height: contentListClass === 'horizontal' ? fitWithWidthOfContentListSide + 'px' : null}"
+        >
+          <div class="content-list-detail">
+            <slot name="contentListSide"></slot>
+          </div>
+        </div>
+      </div>
 
 		</Transition>
 
@@ -38,12 +91,57 @@ export default {
 			type: String,
 			default: 'Title'
 		},
+    lengthOfContentList: {
+      type: Number,
+      default: 0
+    }
 	},
-	data() {
+  mounted() {
+    this.$nextTick(() => {
+      if (this.$refs.contentListSideRef) {
+        this.fitWithWidthOfContentListSide = this.$refs.contentListSideRef.offsetWidth - 20;
+      }
+    });
+  },
+  data() {
 		return {
-			contentListSideExpanded: true
+			contentListSideExpanded: true,
+
+      contentListSequential: false,
+      contentListOneColumn: false,
+      contentListTwoColumns: false,
+      contentListThreeColumns: false,
+
+      contentListClass: '',
+
+      scrollLeft: 0,
+      isMouseDown: false,
+      startX: 0,
+
+      fitWithWidthOfContentListSide: null
 		}
-	}
+	},
+  methods: {
+
+  },
+  watch: {
+    fitWithWidthOfContentListSide (value) {
+      console.log(value)
+    },
+
+    contentListSideExpanded (value) {
+      if(value) {
+        this.$nextTick(() => {
+          if (this.$refs.contentListSideRef) {
+            this.fitWithWidthOfContentListSide = this.$refs.contentListSideRef.offsetWidth - 20;
+          }
+        });
+      }
+    }
+  },
+  computed: {
+
+  }
 }
 </script>
 
@@ -96,12 +194,6 @@ export default {
 			font-size: 16px;
 			font-weight: 600;
 		}
-
-		.btn-toggle-expand {
-			i {
-				transition: 0.2s;
-			}
-		}
 	}
 
 	.content-list-side {
@@ -114,10 +206,17 @@ export default {
 		z-index: 5;
 		// Đặt z-index = 5 ( < z-index của header-side, nhằm ẩn bên dưới header-side khi bật tắt expand)
 
-		.content-side {
+		.content-list-wrapper {
 			position: relative;
 			z-index: 6;
 			// Đặt z-index = 6 để nội dung của content-side có thể thao tác được ( > 5 & < 10)
+
+      .content-list-detail {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-template-rows: auto auto auto;
+        grid-column-gap: 50px;
+      }
 		}
 
 		&:after {

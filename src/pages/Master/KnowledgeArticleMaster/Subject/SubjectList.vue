@@ -24,13 +24,13 @@
 				:loading="isLoadingTable"
 			>
 				<template #subjectId="{ data }">
-					<div>
+					<div class="content__td identify">
 						{{ data.subjectId }}
 					</div>
 				</template>
 
 				<template #title="{ data }">
-					<div>
+					<div class="content__td">
 						{{ data.title }}
 					</div>
 				</template>

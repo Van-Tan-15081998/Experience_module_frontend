@@ -7,6 +7,12 @@
 			<core-component-loader/>
 		</div>
 
+    <div class="box">
+      <div
+          v-if="isProcessingPage"
+          class="loading-bar"></div>
+    </div>
+
 		<div class="page-title-side">
 			{{ pageTitle }}
 		</div>
@@ -114,6 +120,10 @@ export default {
 			type: Boolean,
 			default: true
 		},
+    isProcessingPage: {
+      type: Boolean,
+      default: false
+    }
 	},
 	mounted() {
 		this.exEventBus.on(
@@ -162,6 +172,44 @@ export default {
 		width: 100%;
 		height: 100%;
 	}
+
+  .box {
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    top: 45px;
+    left: 0;
+
+    @keyframes LoadingBar {
+      0%  { transform: translateX(-100%) }
+      100% { transform: translateX(100%) }
+    }
+
+    .loading-bar {
+      display: block;
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      overflow-x: hidden;
+      background-color: #051937; /* use px color $primary-light */
+
+      &:before {
+        content: "";
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        //background-image: linear-gradient(to right, #656565, #4ca1af);
+        background-image: linear-gradient(to right, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+        animation: LoadingBar 0.8s cubic-bezier(.5,.01,.51,1) infinite;
+      }
+    }
+  }
 
 	.page-title-side {
 		position: absolute;
@@ -217,7 +265,7 @@ export default {
 		.left-side {
 			width: 80px;
 			height: 100%;
-			overflow-y: scroll;
+			//overflow-y: scroll;
 			background-color: inherit;
 			transition: 0.2s;
 
@@ -236,7 +284,9 @@ export default {
 
 			.content-side {
 				width: 100%;
+        height: calc(100% - 100px);
 				opacity: 0;
+        overflow: hidden;
 			}
 
 			&.expanded {
@@ -253,6 +303,7 @@ export default {
 			width: calc(100% - 500px);
 			height: 100%;
 			overflow-y: scroll;
+      overflow-x: hidden;
 			scroll-behavior: smooth;
 			background-color: inherit;
 			transition: 0.2s;

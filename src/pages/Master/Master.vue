@@ -68,27 +68,37 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/store/System/AuthStore';
-import apiService from "@/plugins/api/apiService";
+// import { useAuthStore } from '@/store/System/AuthStore';
+// import apiService from "@/plugins/api/apiService";
 
 import CoreModal from "@/core/components/modal/CoreModal.vue";
+import CoreSystem from "@/core/components/base/CoreSystem";
 
 export default {
   name: 'Master-Page',
-  setup() {
-    const authStore = useAuthStore();
-
-    let appApiService = apiService(this, authStore);
-
-    return {
-      appApiService
-    }
+  extends: CoreSystem,
+  // setup() {
+    // const authStore = useAuthStore();
+    // // authStore.initAppAuth();
+    //
+    // let appApiService = apiService(this, authStore);
+    //
+    // return {
+    //   authStore,
+    //   appApiService
+    // }
+  // },
+  beforeMount() {
+    // this.authStore.initAppAuth();
   },
-  provide() {
-    return {
-      apiService: this.appApiService
-    }
+  mounted() {
+    console.log('apiService', this.appApiService)
   },
+  // provide() {
+  //   return {
+  //     apiService: this.appApiService
+  //   }
+  // },
 	components: {
 		CoreModal
 	},

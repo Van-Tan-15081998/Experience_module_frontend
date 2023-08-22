@@ -57,29 +57,37 @@ export default {
 
 <style scoped lang="scss">
 .shortcut-list-wrapper {
-	margin: 10px;
+	//margin: 10px;
+
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 
 	.shortcut-item {
-		min-height: 35px;
-		margin: 5px;
-		padding: 5px 5px 5px 10px;
-		font-size: 15px;
-		cursor: pointer;
-		user-select: none;
-		border: 1px solid #626262;
-		border-top-left-radius: 5px;
-		border-bottom-left-radius: 5px;
-		border-right: none;
-		color: lightgrey;
-		transition: 0.1s;
-		transform-origin: right;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 
-		display: flex;
-		flex-direction: column;
-		flex-wrap: wrap;
-		justify-content: center;
-		align-items: center;
-		align-content: center;
+    min-height: 35px;
+    margin: 5px;
+    padding: 10px;
+    font-size: 14px;
+    color: lightgrey;
+
+    cursor: pointer;
+    user-select: none;
+    background-color: #1b1f23;
+    border: 1px solid #626262;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-right: none;
+
+    transition: 0.1s;
+    transform-origin: right;
 
 		&:hover {
 			border-color: #ffc517;

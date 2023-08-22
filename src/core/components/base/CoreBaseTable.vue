@@ -147,6 +147,7 @@
 			},
 
 			openAddForm(data = null) {
+        console.log(data);
 				this.isOpenAddForm = true;
 			},
 			openEditForm(itemId = null) {

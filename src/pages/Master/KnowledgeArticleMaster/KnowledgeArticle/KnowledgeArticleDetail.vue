@@ -4,6 +4,7 @@
 			v-if="isActionModeView"
 			:page-title="'Chi tiết bài viết: ' + pageData.title"
 			:is-loading-page="isPageLoadingData"
+      :is-processing-page="isPageLoadingData"
 		>
 
 			<template #leftSide>
@@ -11,6 +12,7 @@
 					:list="pageData.unitContentList"
 					id-string="knowledgeArticleContentUnitId"
 					title-string="title"
+          class="core-shortcut-list"
 				></core-shortcut-list>
 			</template>
 

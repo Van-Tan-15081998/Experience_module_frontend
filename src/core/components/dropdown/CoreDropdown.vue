@@ -61,34 +61,31 @@
 
 .core-app-style__dropdown {
 	.dropdown_wrapper {
-		width: 100%;
-		height: 45px;
-
-		display: flex;
-		flex-direction: row;
-		flex-wrap: nowrap;
-		justify-content: flex-start;
-		align-items: center;
-		align-content: flex-start;
+    width: 450px;
+    height: 45px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: flex-start;
 
 		select {
-			width: 100%;
-			height: 100%;
-			padding: 0 40px 0 15px;
-			border: none;
-			outline: none;
-			transition: 0.1s;
-			color: #6DC5CB;
-			border-radius: 6px;
-			background-color: #1b1f23;
-			box-shadow: -4px -2px 4px 0px #262830,
-			4px 2px 6px 0px #111316;
-			font-size: 16px;
-			margin-right: 5px;
+      width: 100%;
+      height: 100%;
+      padding: 0 15px 0 40px;
+      margin-right: 5px;
+      font-size: 16px;
+      color: #6DC5CB;
+      background-color: #1b1f23;
+      border: 1px solid #626262;
+      border-radius: 6px;
+      outline: none;
+      box-shadow: -4px -2px 4px 0px #262830, 4px 2px 6px 0px #111316;
+      transition: 0.1s;
 
 			&:focus {
-				border: none;
-				outline: none;
+        border: 1px solid #F1DD00;
 			}
 		}
 

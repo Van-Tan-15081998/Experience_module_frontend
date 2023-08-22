@@ -38,25 +38,23 @@
 					<template #transition-content-side>
 						<core-transition-content-list-expand
 							title="Danh sách Chủ đề cha"
+              :length-of-content-list="lengthOfContentList"
 						>
-							<template #contentListSide>
+							<template
+                  v-if="pageData.parentSubjectList.length > 0"
+                  #contentListSide>
 
-								<ul
-									v-if="pageData.parentSubjectList.length > 0"
-								>
-									<li
-										v-for="(item, index) in pageData.parentSubjectList"
-										:key="index"
-									>
-										<button
-											@click="onGoBranchSubjectViewPage(item.subjectId)"
-											class="core-app-style__button only-margin-vertical green-harmony-color icon-effect-zoom-in">
-											{{ item.title }}
-										</button>
-									</li>
-								</ul>
+                <div v-for="(item, index) in pageData.parentSubjectList"
+                     :key="index"
+                     class="item"
+                >
+                  <button
 
-								<span v-else>Danh sách rỗng</span>
+                      @click="onGoBranchSubjectViewPage(item.subjectId)"
+                      class="core-app-style__button fit-height-size only-margin-vertical green-harmony-color icon-effect-zoom-in">
+                    {{ item.title }}
+                  </button>
+                </div>
 
 							</template>
 						</core-transition-content-list-expand>
@@ -68,24 +66,21 @@
 						<core-transition-content-list-expand
 							title="Danh sách Chủ đề con"
 						>
-							<template #contentListSide>
+							<template
+                  v-if="pageData.branchSubjectList.length > 0"
+                  #contentListSide>
 
-								<ul
-									v-if="pageData.branchSubjectList.length > 0"
-								>
-									<li
-										v-for="(item, index) in pageData.branchSubjectList"
-										:key="index"
-									>
-										<button
-											@click="onGoBranchSubjectViewPage(item.subjectId)"
-											class="core-app-style__button only-margin-vertical green-harmony-color icon-effect-zoom-in">
-											{{ item.title }}
-										</button>
-									</li>
-								</ul>
-
-								<span v-else>Danh sách rỗng</span>
+                <div
+                    v-for="(item, index) in pageData.branchSubjectList"
+                    :key="index"
+                    class="item"
+                >
+                  <button
+                      @click="onGoBranchSubjectViewPage(item.subjectId)"
+                      class="core-app-style__button fit-height-size only-margin-vertical green-harmony-color icon-effect-zoom-in">
+                    {{ item.title }}
+                  </button>
+                </div>
 
 							</template>
 						</core-transition-content-list-expand>
@@ -97,24 +92,22 @@
 						<core-transition-content-list-expand
 							title="Danh sách Bài viết khoa học"
 						>
-							<template #contentListSide>
+							<template
+                  v-if="pageData.knowledgeArticleList.length > 0"
+                  #contentListSide>
 
-								<ul
-									v-if="pageData.knowledgeArticleList.length > 0"
-								>
-									<li
-										v-for="(item, index) in pageData.knowledgeArticleList"
-										:key="index"
-									>
-										<button
-											@click="onGoDetailKnowledgeArticlePage(item.knowledgeArticleId)"
-											class="core-app-style__button only-margin-vertical green-harmony-color icon-effect-zoom-in">
-											{{ item.title }}
-										</button>
-									</li>
-								</ul>
+                <div
+                    v-for="(item, index) in pageData.knowledgeArticleList"
+                    :key="index"
+                    class="item"
+                >
+                  <button
 
-								<span v-else>Danh sách rỗng</span>
+                      @click="onGoDetailKnowledgeArticlePage(item.knowledgeArticleId)"
+                      class="core-app-style__button fit-height-size only-margin-vertical green-harmony-color icon-effect-zoom-in">
+                    {{ item.title }}
+                  </button>
+                </div>
 
 							</template>
 						</core-transition-content-list-expand>
@@ -523,7 +516,10 @@ export default {
 		},
 		canDeleteBranchSubject() {
 			return this.pageData.branchSubjectList.length > 0;
-		}
+		},
+    lengthOfContentList() {
+      return this.$refs.contentListDetail ? this.$refs.contentListDetail.offsetHeight : 0;
+    }
 	},
 	methods: {
 		onDeleteParentSubject(index) {

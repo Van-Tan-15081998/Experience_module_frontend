@@ -82,6 +82,30 @@
 								Para
 							</div>
 						</div>
+
+            <div class="divider"></div>
+
+            <div
+                @click="onChooseTextStructure('text_structure_style_40')"
+                class="item">
+              <div class="text_structure_style_40">
+                Para
+              </div>
+            </div>
+            <div
+                @click="onChooseTextStructure('text_structure_style_41')"
+                class="item">
+              <div class="text_structure_style_41">
+                Para
+              </div>
+            </div>
+            <div
+                @click="onChooseTextStructure('text_structure_style_42')"
+                class="item">
+              <div class="text_structure_style_42">
+                Para
+              </div>
+            </div>
 					</div>
 				</div>
 
@@ -207,6 +231,31 @@
 								Abc
 							</div>
 						</div>
+
+            <div class="divider"></div>
+
+            <div
+                @click="onChooseTextStructure('text_structure_style_60')"
+                class="item-2">
+              <div class="text_structure_style_60">
+                Conversation
+              </div>
+            </div>
+            <div
+                @click="onChooseTextStructure('text_structure_style_61')"
+                class="item">
+              <div class="text_structure_style_61">
+                Left
+              </div>
+            </div>
+            <div
+                @click="onChooseTextStructure('text_structure_style_62')"
+                class="item">
+              <div class="text_structure_style_62">
+                Right
+              </div>
+            </div>
+
 					</div>
 				</div>
 			</div>
@@ -379,7 +428,11 @@ export default {
 					.text_structure_style_27,
 					.text_structure_style_28,
 					.text_structure_style_29,
-					.text_structure_style_30 {
+					.text_structure_style_30,
+          .text_structure_style_40,
+          .text_structure_style_41,
+          .text_structure_style_42,
+          {
 						text-align: center;
 						width: 100%;
 						height: 100%;
@@ -404,6 +457,13 @@ export default {
 						}
 					}
 				}
+
+        .divider {
+          height: 26px;
+          width: 2px;
+          background-color: #555555;
+          margin-right: 5px;
+        }
 
 			}
 
@@ -468,31 +528,57 @@ export default {
 						color: #2D2D2D;
 						background-color: #D8BFD8;
 					}
+
+          .text_structure_style_40 {
+            color: #2D2D2D;
+            background-color: transparent;
+            border-bottom: 2px solid #EA1537;
+            transition: 0.2s;
+
+            &:hover {
+              background-color: #FFDBE3;
+              border-bottom: 2px solid #EA1537;
+            }
+          }
+
+          .text_structure_style_41 {
+            color: #EA1537;
+            text-decoration: line-through;
+            background-color: transparent;
+          }
+
+          .text_structure_style_42 {
+            color: #4A6EE0;
+            background-color: transparent;
+          }
 				}
+
+        .item-2 {
+          width: 150px;
+        }
 			}
 		}
 	}
 
 	.input_header {
-		width: 100%;
-		display: flex;
-		flex-direction: row;
-		flex-wrap: nowrap;
-		justify-content: space-between;
-		align-items: flex-end;
-		align-content: flex-start;
-		font-size: 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    align-content: flex-start;
+    font-size: 16px;
 
 		.action_change_text_structure, .action_change_paragraph_structure {
-			position: relative;
-			min-width: 300px;
-			height: 35px;
-			margin-bottom: 6px;
-			border-radius: 3px;
-			background-color: white;
-
-			display: flex;
-			flex-direction: row;
+      position: relative;
+      min-width: 300px;
+      height: 35px;
+      margin-bottom: 6px;
+      border-radius: 3px;
+      background-color: white;
+      display: flex;
+      flex-direction: row;
 
 			.highlight_block , .highlight_text {
 				height: calc(100% - 8px);
@@ -502,7 +588,7 @@ export default {
 				display: flex;
 				flex-direction: row;
 
-				.item {
+				.item, .item-2 {
 					.text_structure_style_1,
 					.text_structure_style_2,
 					.text_structure_style_3,
@@ -517,20 +603,24 @@ export default {
 					.text_structure_style_12,
 					.text_structure_style_13,
 					.text_structure_style_14,
-					.text_structure_style_15 {
-						text-align: center;
-						width: 100%;
-						height: 100%;
-						border-radius: 4px;
-						box-sizing: border-box;
-						border: 1px solid transparent;
-						user-select: none;
-						transition: 0.05s;
+					.text_structure_style_15,
 
-						display: flex;
-						flex-direction: row;
-						justify-content: center;
-						align-items: center;
+          .text_structure_style_60,
+          .text_structure_style_61,
+          .text_structure_style_62,
+          {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            box-sizing: border-box;
+            user-select: none;
+            transition: 0.05s;
 
 						&:hover {
 							border: 1px solid #DDDBDD;
@@ -541,7 +631,6 @@ export default {
 						}
 					}
 				}
-
 			}
 
 			.highlight_block {
@@ -587,7 +676,7 @@ export default {
 			}
 
 			.highlight_text {
-				.item {
+				.item, .item-2 {
 					width: 50px;
 					height: 100%;
 					margin-right: 4px;
@@ -627,6 +716,10 @@ export default {
 						font-size: 24px;
 					}
 				}
+
+        .item-2 {
+          width: 120px;
+        }
 			}
 		}
 	}

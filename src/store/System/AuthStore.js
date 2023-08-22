@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('authApp', {
-    state: () => ({
-        isAuthenticated: false,
-        userName: null,
-        userPassword: null,
-        userToken: null
-    }),
+    state: () => {
+        return {
+            isAuthenticated: false,
+            userName: '',
+            userPassword: '',
+            userToken: ''
+        };
+    },
     getters: {
         getIsAuthenticated(state) {
             return state.isAuthenticated;
@@ -23,27 +25,43 @@ export const useAuthStore = defineStore('authApp', {
     },
     actions: {
         // TODO: Temp
-        checkLogin() {
-            let tokenFromLocalStorage = JSON.parse(localStorage.getItem('logged-user-info'))
 
-            if(tokenFromLocalStorage && tokenFromLocalStorage['token']) {
-                return tokenFromLocalStorage['token'];
+
+        initAppAuth() {
+            // let tokenFromLocalStorage = JSON.parse(localStorage.getItem('logged-user-info'))
+            let tokenFromLocalStorage = localStorage.getItem('logged-user-info')
+
+            console.log('tokenFromLocalStorage', tokenFromLocalStorage);
+
+            if(tokenFromLocalStorage !== '' && tokenFromLocalStorage !== null) {
+                console.log('initAppAuth-set true')
+                this.isAuthenticated = true;
+                this.userToken = tokenFromLocalStorage;
+            } else {
+                console.log('initAppAuth-set false')
+                this.isAuthenticated = false;
+                this.userToken = '';
             }
 
-            return false;
+            // return this.isAuthenticated;
         },
 
         login(name, password, token) {
+            console.log('store_login', token)
             this.isAuthenticated = true;
             this.userName = name;
             this.userPassword = password;
             this.userToken = token;
         },
+
         logout() {
+
+            localStorage.setItem('logged-user-info', '');
+
             this.isAuthenticated = false
-            this.userName = null;
-            this.userPassword = null;
-            this.userToken = null;
+            this.userName = '';
+            this.userPassword = '';
+            this.userToken = '';
         }
     },
 })
