@@ -5,6 +5,14 @@
 			:is-loading-page="isLoadingTable"
 		>
 
+      <template #leftSide>
+        <button
+            @click="onGoMasterSearch"
+            class="core-app-style__button full-width-size blue-harmony-color icon-effect-zoom-in">
+          <i class="bi bi-search"></i>
+        </button>
+      </template>
+
 			<template #centerSide>
 
 			<button
@@ -123,7 +131,10 @@ export default {
 		},
 		onGoEditPage(subjectId) {
 			this.$router.push({ name: 'subject_detail', query: { id: subjectId, actionMode: 'edit'}})
-		}
+		},
+    onGoMasterSearch() {
+      this.$router.push({ name: 'master_search'});
+    }
 	}
 }
 </script>

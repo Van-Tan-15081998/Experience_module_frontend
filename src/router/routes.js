@@ -99,6 +99,14 @@ const routes = [
                         meta: { requiresAuth: true }
                     },
 
+
+                    {
+                        path: 'master_search',
+                        name: 'master_search',
+                        component: () => import('../pages/Master/KnowledgeArticleMaster/MasterSearch/MasterSearch'),
+                        meta: { requiresAuth: true }
+                    },
+
                 ],
                 meta: { requiresAuth: true }
             },

@@ -12,7 +12,9 @@
 				<slot name="formContent"></slot>
 			</div>
 
-			<div class="form-footer">
+			<div
+          v-if="isHasFooter"
+          class="form-footer">
 				<slot name="formFooter"></slot>
 			</div>
 
@@ -34,7 +36,11 @@ import CoreComponentLoader from "@/core/components/loader/CoreComponentLoader.vu
 			isLoading: {
 				type: Boolean,
 				default: false
-			}
+			},
+      isHasFooter: {
+        type: Boolean,
+        default: true
+      }
 		},
 		components: {
 			CoreComponentLoader

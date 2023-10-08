@@ -1945,6 +1945,22 @@ body {
                 }
             }
 
+            .content-side-with-search-bar {
+                .searchBar {
+                    .core-app-style__form {
+                        position: relative;
+                        overflow: hidden;
+
+                        .form-content {
+                            width: 100% !important;
+                            height: fit-content !important;
+                            padding: 5px;
+                            overflow: hidden;
+                        }
+                    }
+                }
+            }
+
             .core-app-style__label {
 
             }

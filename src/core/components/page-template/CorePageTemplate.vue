@@ -47,9 +47,22 @@
 					style="position: absolute; top: 0}"
 				></div>
 
-				<div class="content-side">
-					<slot name="centerSide"></slot>
-				</div>
+
+          <div v-if="isShowSearchBar"
+              class="content-side-with-search-bar">
+            <div class="searchBar">
+              <slot name="searchBar"></slot>
+            </div>
+            <div class="content-side">
+              <slot name="centerSide"></slot>
+            </div>
+          </div>
+
+
+          <div v-else class="content-side">
+            <slot name="centerSide"></slot>
+          </div>
+
 
 				<div
 					ref="hiddenBottomElement"
@@ -121,6 +134,10 @@ export default {
 			default: true
 		},
     isProcessingPage: {
+      type: Boolean,
+      default: false
+    },
+    isShowSearchBar: {
       type: Boolean,
       default: false
     }
@@ -313,6 +330,29 @@ export default {
 			.content-side {
 
 			}
+
+      .content-side-with-search-bar {
+        position: relative;
+        height: 100%;
+        width: 100%;
+
+        .searchBar {
+          position: absolute;
+          height: 100px;
+          width: 100%;
+          background-color: transparent;
+        }
+
+        .content-side {
+          position: absolute;
+          top: 100px;
+          height: calc(100% - 100px);
+          width: 100%;
+          overflow-y: scroll;
+          border-top: 1px solid #626262;
+          border-radius: 5px;
+        }
+      }
 
 			&.width-full-on-all {
 				width: calc(100% - 160px);

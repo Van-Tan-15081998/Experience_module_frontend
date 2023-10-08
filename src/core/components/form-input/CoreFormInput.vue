@@ -1,7 +1,7 @@
 <template>
     <div>
 			<div class="input_wrapper">
-				<div class="input_label">{{ label }}</div>
+				<div v-if="label!==''" class="input_label">{{ label }}</div>
 				<div
 					:class="{'error': isShowError}"
 					class="input_validator">
@@ -38,7 +38,7 @@
 		props: {
 			label: {
 				type: [String],
-				default: 'Label'
+				default: ''
 			},
 
 			error: {
