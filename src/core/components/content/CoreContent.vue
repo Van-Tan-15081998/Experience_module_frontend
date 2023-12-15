@@ -69,10 +69,12 @@ export default {
 
     &.c-label-master {
       .content {
-        font-size: 22px;
+        height: auto;
+        width: 100%;
+        font-size: 20px;
         font-weight: 600;
         color: #555;
-        line-height: 1;
+        line-height: 1.4;
         padding-left: 0 !important;
       }
     }
@@ -89,8 +91,8 @@ export default {
 		}
 
 		.content {
-      min-width: calc(100% - 200px);
-      max-width: calc(100% - 300px);
+      //min-width: calc(100% - 200px);
+      //max-width: calc(100% - 300px);
       height: fit-content;
       font-weight: 600;
       overflow: hidden;

@@ -2,11 +2,11 @@
 
 export default {
     // API URLS
-    API_URL_LIST: '/master/knowledge_article_master/subject/list',
-    API_URL_DETAIL: '/master/knowledge_article_master/subject/detail',
-    API_URL_DETAIL_REGISTER: '/master/knowledge_article_master/subject/detail/register',
-    API_URL_DETAIL_UPDATE: '/master/knowledge_article_master/subject/detail/update',
-    API_URL_DETAIL_DELETE: '/master/knowledge_article_master/subject/detail/delete',
+    API_URL_LIST: '/master/knowledge_article_master/tag/list',
+    API_URL_DETAIL: '/master/knowledge_article_master/tag/detail',
+    API_URL_DETAIL_REGISTER: '/master/knowledge_article_master/tag/detail/register',
+    API_URL_DETAIL_UPDATE: '/master/knowledge_article_master/tag/detail/update',
+    API_URL_DETAIL_DELETE: '/master/knowledge_article_master/tag/detail/delete',
 
     async getList(app, urlParams, params) {
 

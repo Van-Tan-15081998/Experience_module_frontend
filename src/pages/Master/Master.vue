@@ -53,6 +53,15 @@
 								</div>
 							</li>
 						</router-link>
+
+            <router-link to="/master/youtube/master-dashboard">
+              <li>
+                <div class="menu-item">
+                  <div class="menu-icon"><i class="bi bi-box"></i></div>
+                  <div class="menu-label">Master Dashboard</div>
+                </div>
+              </li>
+            </router-link>
 					</ul>
 				</div>
 			</div>

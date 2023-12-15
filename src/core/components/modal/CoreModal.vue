@@ -86,6 +86,8 @@
 		background: #1b1f23;
 		box-shadow: inset -2px -2px 4px rgba(0,0,0,0.5),
 		inset 2px 2px 4px rgba(255,255,255,0.07);
+
+    border: 1px solid #626262;
 	}
 
 	.modal-header {

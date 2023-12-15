@@ -78,6 +78,20 @@ const routes = [
                         meta: { requiresAuth: true }
                     },
 
+                    // Tag
+                    {
+                        path: 'tag/list',
+                        name: 'tag_list',
+                        component: () => import('../pages/Master/KnowledgeArticleMaster/Tag/TagList.vue'),
+                        meta: { requiresAuth: true }
+                    },
+                    {
+                        path: 'tag/detail',
+                        name: 'tag_detail',
+                        component: () => import('../pages/Master/KnowledgeArticleMaster/Tag/TagDetail.vue'),
+                        meta: { requiresAuth: true }
+                    },
+
                     // Knowledge article
                     {
                         path: 'knowledge_article/list',
@@ -173,6 +187,13 @@ const routes = [
 
                     // TODO:
                 ]
+            },
+
+            // TODO: Laravel Research Route Group
+            {
+                path: 'youtube/master-dashboard',
+                name: 'youtube/master-dashboard',
+                component: () => import('../youtube/pages/MasterDashboard'),
             },
         ],
         // meta: { requiresAuth: true }

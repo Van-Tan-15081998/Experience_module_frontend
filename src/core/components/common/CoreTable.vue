@@ -1,44 +1,127 @@
 <template>
 	<div class="core-app-style__container">
-		<Transition>
-			<table
-				v-if="!loading"
-				class="table core-app-style__table">
-				<thead class="thead-dark">
-				<tr>
-					<th
-						v-for="(field, index) in fields"
-						:key="index"
-						scope="col">
-						{{ field.label }}
-					</th>
-				</tr>
-				</thead>
-				<tbody>
+    <div class="paginate">
+      <div class="custom-table-footer" >
+        <div class="items-per-page">
+          <select v-model="limitCount" class="core-app-style__dropdown">
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+        <div class="custom-pagination display-flex__LRTB">
 
-				<tr v-for="(data, index) in items"
-						:key="index">
+          <button
+              v-if="canGotoFirstPage"
+              @click="gotoFirstPage()"
+              class="core-app-style__button blue-harmony-color icon-effect-zoom-in">
+            <i class="bi bi-box-arrow-in-left"></i>
+          </button>
+          <button
+              v-else
+              disabled
+              class="core-app-style__button icon-effect-zoom-in">
+            <i class="bi bi-box-arrow-in-left"></i>
+          </button>
 
-					<td
-						v-for="(slot, i) in slotData"
-						:key="i"
-					>
-						<slot
-							:data="data" :name="slot">
-							{{ data.slot }}
-						</slot>
-					</td>
-				</tr>
-				</tbody>
-			</table>
+          <button
+              v-if="canGotoPreviousPage"
+              @click="gotoPreviousPage()"
+              class="core-app-style__button blue-harmony-color icon-effect-zoom-in">
+            <i class="bi bi-arrow-left-short"></i>
+          </button>
+          <button
+              v-else
+              disabled
+              class="core-app-style__button icon-effect-zoom-in">
+            <i class="bi bi-arrow-left-short"></i>
+          </button>
 
-			<core-loading-table
-				v-else-if="loading"
-				:columns="fields.length"
-				:rows="3"
-			></core-loading-table>
+          <button
+              class="core-app-style__button active blue-harmony-color-active icon-effect-zoom-in"
+          >
+            {{ currentPageComputed }} / {{ totalPagesComputed }}
+          </button>
 
-		</Transition>
+          <button
+              v-if="canGotoNextPage"
+              @click="gotoNextPage()"
+              class="core-app-style__button blue-harmony-color icon-effect-zoom-in"
+          >
+            <i class="bi bi-arrow-right-short"></i>
+          </button>
+          <button
+              v-else
+              disabled
+              class="core-app-style__button icon-effect-zoom-in">
+            <i class="bi bi-arrow-right-short"></i>
+          </button>
+
+          <button
+              v-if="canGotoLastPage"
+              @click="gotoLastPage()"
+              class="core-app-style__button blue-harmony-color icon-effect-zoom-in">
+            <i class="bi bi-box-arrow-in-right"></i>
+          </button>
+          <button
+              v-else
+              disabled
+              class="core-app-style__button icon-effect-zoom-in">
+            <i class="bi bi-box-arrow-in-right"></i>
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+    <slot
+        v-if="notUseTableFormat"
+        name="tableContentWrapper"></slot>
+
+    <div v-else>
+      <Transition>
+        <table
+            v-if="!loading"
+            class="table core-app-style__table">
+          <thead class="thead-dark">
+          <tr>
+            <th
+                v-for="(field, index) in fields"
+                :key="index"
+                scope="col">
+              {{ field.label }}
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <tr v-for="(data, index) in items"
+              :key="index">
+
+            <td
+                v-for="(slot, i) in slotData"
+                :key="i"
+            >
+              <slot
+                  :data="data" :name="slot">
+                {{ data.slot }}
+              </slot>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <core-loading-table
+            v-else-if="loading"
+            :columns="fields.length"
+            :rows="3"
+        ></core-loading-table>
+
+      </Transition>
+    </div>
+
 
 		<div class="paginate">
 			<div class="custom-table-footer" >
@@ -136,7 +219,7 @@ export default {
 	data() {
 		return {
 			// currentPage: 0,
-			limitCount: 0,
+			limitCount: 10,
 			// totalCount: 0,
 			// totalPages: 0,
 
@@ -213,6 +296,10 @@ export default {
       default () {
         return []
       }
+    },
+    notUseTableFormat: {
+      type: Boolean,
+      default: false
     },
     loading: {
       type: Boolean,
@@ -292,6 +379,33 @@ export default {
 	}
 	.items-per-page {
 		width: 100px;
+      height: 35px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      align-content: flex-start;
+
+      select {
+        width: 100%;
+        height: 100%;
+        //padding: 0 15px 0 20px;
+        text-align: center;
+        margin-right: 5px;
+        font-size: 16px;
+        color: #6DC5CB;
+        background-color: #1b1f23;
+        border: 1px solid #626262;
+        border-radius: 6px;
+        outline: none;
+        box-shadow: -4px -2px 4px 0px #262830, 4px 2px 6px 0px #111316;
+        transition: 0.1s;
+
+        &:focus {
+          border: 1px solid #F1DD00;
+        }
+      }
 	}
 	ul.pagination {
 		margin-bottom: 0px;

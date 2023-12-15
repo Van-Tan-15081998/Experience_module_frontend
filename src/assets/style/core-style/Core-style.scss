@@ -565,6 +565,10 @@ body {
                 &.c-label {
                     font-size: 18px;
                     color: #F5C200;
+
+                    b {
+                        font-weight: 500 !important;
+                    }
                 }
 
                 &.c-content {
@@ -1259,6 +1263,22 @@ body {
                 &.fit-height-size {
                     height: auto;
                     padding: 10px;
+                }
+
+                &.fixed-width-size-60 {
+                    min-width: 60px;
+                }
+                &.fixed-width-size-80 {
+                    min-width: 80px;
+                }
+                &.fixed-width-size-100 {
+                    min-width: 100px;
+                }
+                &.fixed-width-size-120 {
+                    min-width: 120px;
+                }
+                &.fixed-width-size-150 {
+                    min-width: 150px;
                 }
 
             }

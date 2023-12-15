@@ -29,6 +29,9 @@
 						<core-form-input
 							label="Tiêu đề"
 							:error="getInputErrorByKey('title')"
+              :input-value="pageData.title"
+              @onDeleteInputData="pageData.title = ''"
+              @onPasteInputData="(value) => pageData.title = value"
 						>
 							<template #input-side>
 								<input
@@ -205,6 +208,9 @@
 						<core-form-input
 							label="Tiêu đề"
 							:error="getInputErrorByKey('title')"
+              :input-value="pageData.title"
+              @onDeleteInputData="pageData.title = ''"
+              @onPasteInputData="(value) => pageData.title = value"
 						>
 							<template #input-side>
 								<input

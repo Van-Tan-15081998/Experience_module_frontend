@@ -17,6 +17,10 @@ import CoreFormCheckbox from "@/core/components/form-checkbox/CoreFormCheckbox.v
 import CoreModal from "@/core/components/modal/CoreModal.vue";
 import CoreFormTextArea from "@/core/components/form-textarea/CoreFormTextarea.vue";
 import CoreShortcutList from "@/core/components/shortcut-list/CoreShortcutList.vue";
+import CoreSearchSelection from "@/core/components/search-selection/CoreSearchSelection";
+
+// Component not core
+import KnowledgeArticleItem from "@/pages/Master/KnowledgeArticleMaster/KnowledgeArticleItem/KnowledgeArticleItem";
 
 import {isEqual} from 'lodash';
 
@@ -36,7 +40,9 @@ export default {
 		CoreFormCheckbox,
 		CoreModal,
 		CoreFormTextArea,
-		CoreShortcutList
+		CoreShortcutList,
+    CoreSearchSelection,
+    KnowledgeArticleItem
 	},
 	data() {
 		return {
@@ -57,6 +63,7 @@ export default {
 			actionMode: null,
 
 			detailPageName: '',
+      listPageName: '',
 
 			inputErrors: [],
 			statuses: [],
@@ -188,9 +195,14 @@ export default {
 					this.parseSelectionItemsPageData(dataObj.data.selectionItems);
 
 					if (this.actionMode === 'new') {
-						this.initDefaultData();
+						this.initDefaultDataForNewMode();
 					}
 
+          if (this.actionMode === 'edit') {
+            this.initDefaultDataForEditMode();
+          }
+
+          this.updateLoadedData();
 				}
 
 				this.isPageLoadingData = false;
@@ -225,7 +237,8 @@ export default {
 				// Nếu save thành công
 				if(dataObj.data) {
 					this.parsePageData(dataObj.data.data);
-					this.onGoViewPage();
+
+					this.onGoDetailViewPage();
 				}
 
 				// Nhận thông báo
@@ -234,9 +247,43 @@ export default {
 				}
 
 				this.isPageLoadingData = false;
-
 			}
 		},
+
+    async delete() {
+      this.isPageLoadingData = true;
+
+      let dataObj = null;
+
+      if(this.context && this.dataService) {
+
+        dataObj = await this.dataService.delete(this.context, this.pageData);
+
+        if(!dataObj) {
+          this.isLoadingProcessing = false;
+
+          return;
+        }
+
+        // Lỗi validate
+        if(dataObj.inputErrors) {
+          this.inputErrors = dataObj.inputErrors;
+        }
+
+        // Nếu save thành công
+        if(dataObj.data) {
+          this.parsePageData(dataObj.data.data);
+          this.onGoListViewPage();
+        }
+
+        // Nhận thông báo
+        if(dataObj.alerts) {
+          this.statuses = dataObj.alerts;
+        }
+
+        this.isPageLoadingData = false;
+      }
+    },
 
 		parseRouteParams() {
 
@@ -327,8 +374,14 @@ export default {
 			return url;
 		},
 
-		initDefaultData() {
+    updateLoadedData() {
+
+    },
+
+    initDefaultDataForNewMode() {
 		},
+    initDefaultDataForEditMode() {
+    },
 
     resetPageData() {
       this.resetAlert();
@@ -365,7 +418,7 @@ export default {
 			this.$router.push({ name: this.detailPageName, query: { id: subjectId, actionMode: 'view'}});
 		},
 
-		onGoViewPage() {
+		onGoDetailViewPage() {
 			this.$router.push(
 				{
 					name: this.detailPageName,
@@ -373,6 +426,15 @@ export default {
 					arguments: {statuses: this.statuses}
 				});
 		},
+
+    onGoListViewPage() {
+      this.$router.push(
+          {
+            name: this.listPageName,
+            query: {},
+            arguments: {statuses: this.statuses}
+          });
+    },
 
 		onGoEditPage() {
 			this.$router.push({ name: this.detailPageName, query: { id: this.id, actionMode: 'edit'}});
@@ -387,7 +449,7 @@ export default {
 		},
 
 		onConfirmDelete() {
-
+      this.delete();
 		}
 	}
 }

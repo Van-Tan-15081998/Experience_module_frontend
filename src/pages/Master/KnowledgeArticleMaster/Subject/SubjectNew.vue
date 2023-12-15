@@ -28,6 +28,9 @@
 						<core-form-input
 							label="Core form label"
 							:error="getInputErrorByKey('title')"
+              :input-value="pageData.title"
+              @onDeleteInputData="pageData.title = ''"
+              @onPasteInputData="(value) => pageData.title = value"
 						>
 							<template #input-side>
 								<input

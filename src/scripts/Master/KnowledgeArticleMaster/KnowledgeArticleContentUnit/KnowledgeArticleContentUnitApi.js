@@ -1,8 +1,8 @@
 export default {
     API_URL_LIST: '/master/knowledge_article_master/knowledge_article_content_unit/list',
     API_URL_DETAIL: '/master/knowledge_article_master/knowledge_article_content_unit/detail',
-    API_URL_DETAIL_REGISTER: '/master/knowledge_article_master/knowledge_article_content_unit/register',
-    API_URL_DETAIL_UPDATE: '/master/knowledge_article_master/knowledge_article_content_unit/update',
+    API_URL_DETAIL_REGISTER: '/master/knowledge_article_master/knowledge_article_content_unit/detail/register',
+    API_URL_DETAIL_UPDATE: '/master/knowledge_article_master/knowledge_article_content_unit/detail/update',
 
     async getList(app, urlParams, params) {
 

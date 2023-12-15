@@ -14,7 +14,9 @@
     </div>
 
 		<div class="page-title-side">
-			{{ pageTitle }}
+			<p>
+        {{ pageTitle }}
+      </p>
 		</div>
 
 		<div class="page-content-side">
@@ -235,9 +237,6 @@ export default {
 		width: calc(100% - 10px);
 		height: 40px;
 
-		overflow: hidden;
-		text-overflow: ellipsis;
-
 		padding: 5px 10px;
 		margin: 5px;
 		font-size: 16px;
@@ -251,6 +250,14 @@ export default {
 		justify-content: flex-start;
 		align-items: center;
 		align-content: center;
+
+    p {
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+    }
 
 		&:after {
 			content: '';
@@ -325,7 +332,7 @@ export default {
 			background-color: inherit;
 			transition: 0.2s;
 
-			padding: 0 5px;
+			padding: 5px;
 
 			.content-side {
 
@@ -349,7 +356,7 @@ export default {
           height: calc(100% - 100px);
           width: 100%;
           overflow-y: scroll;
-          border-top: 1px solid #626262;
+          //border-top: 1px solid #626262;
           border-radius: 5px;
         }
       }

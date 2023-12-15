@@ -101,12 +101,18 @@
                     :key="index"
                     class="item"
                 >
-                  <button
+<!--                  <button-->
 
-                      @click="onGoDetailKnowledgeArticlePage(item.knowledgeArticleId)"
-                      class="core-app-style__button fit-height-size only-margin-vertical green-harmony-color icon-effect-zoom-in">
-                    {{ item.title }}
-                  </button>
+<!--                      @click="onGoDetailKnowledgeArticlePage(item.knowledgeArticleId)"-->
+<!--                      class="core-app-style__button fit-height-size only-margin-vertical green-harmony-color icon-effect-zoom-in">-->
+<!--                    {{ item.title }}-->
+<!--                  </button>-->
+
+                  <knowledge-article-item
+                     @click="onGoDetailKnowledgeArticlePage(item.knowledgeArticleId)"
+                      :title="item.title"
+                      :tags="item.tagList"
+                  ></knowledge-article-item>
                 </div>
 
 							</template>
@@ -169,6 +175,9 @@
 						<core-form-input
 							label="Core form label"
 							:error="getInputErrorByKey('title')"
+              :input-value="pageData.title"
+              @onDeleteInputData="pageData.title = ''"
+              @onPasteInputData="(value) => pageData.title = value"
 						>
 							<template #input-side>
 								<input
@@ -309,6 +318,9 @@
 						<core-form-input
 							label="Core form label"
 							:error="getInputErrorByKey('title')"
+              :input-value="pageData.title"
+              @onDeleteInputData="pageData.title = ''"
+              @onPasteInputData="(value) => pageData.title = value"
 						>
 							<template #input-side>
 								<input
@@ -428,7 +440,7 @@
 				:height="200"
 			>
 				<template #header>
-					Bạn muốn xóa record này ?
+					Bạn muốn xóa Chủ để này?
 				</template>
 
 				<template #body>
@@ -436,7 +448,7 @@
 						<button
 							@click="onConfirmDelete"
 							class="core-app-style__button blue-harmony-color icon-effect-zoom-in"
-						>Lưu</button>
+						>Xóa</button>
 
 						<button
 							@click="onCloseConfirmDeleteModal"
@@ -473,6 +485,7 @@ export default {
 			idString: 'subjectId',
 
 			detailPageName: 'subject_detail',
+      listPageName: 'subject_list',
 
 			pageData: {
 				subjectId: null,
@@ -522,6 +535,12 @@ export default {
     }
 	},
 	methods: {
+    updateLoadedData() {
+      if(this.pageData.level) {
+        this.isRootSubject = true;
+      }
+    },
+
 		onDeleteParentSubject(index) {
 			if (this.pageData.parentSubjectList[index]) {
 

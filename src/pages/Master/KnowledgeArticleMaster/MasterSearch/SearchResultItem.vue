@@ -32,7 +32,7 @@ export default {
   border-radius: 5px;
   .header {
     .title {
-      color: #3ae374;
+      color: #979797;
     }
   }
 }
