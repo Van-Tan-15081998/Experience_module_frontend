@@ -3,7 +3,7 @@
 	<div class="knowledge-article-content-unit-item">
 		<div class="header">
 			<div class="title core-app-style__text c-label">
-				<b>{{ index }} . {{ data.title }}</b>
+				<strong>{{ index }} . {{ data.title }}</strong>
 			</div>
 			<div class="actions">
 				<button
@@ -100,6 +100,13 @@ export default {
 
 		.title {
 			width: fit-content;
+
+      strong {
+        font-family: Loew, sans-serif !important;
+        box-sizing: border-box;
+        font-weight: bolder;
+        font-size: 18px;
+      }
 		}
 
 		.actions {

@@ -2,7 +2,7 @@
   <div class="knowledge-article-item">
     <div class="knowledge-article-item-wrapper">
       <div class="left-wrapper">
-        <img src="https://live.staticflickr.com/65535/53397656893_0f747a5832_h.jpg" alt="">
+        <img :src="coverImageComputed" alt="">
       </div>
       <div class="right-wrapper">
         <div class="title-content">
@@ -30,11 +30,22 @@ export default {
       type: String,
       default: 'Title'
     },
+    coverImage: {
+      type: String,
+    },
     tags: {
       type: [Array],
-      default: () => {return []}
+      default() {return []}
     },
   },
+  computed: {
+    coverImageComputed() {
+      if (this.coverImage) {
+        return this.coverImage;
+      }
+      return 'https://live.staticflickr.com/65535/53397656893_0f747a5832_h.jpg';
+    }
+  }
 }
 </script>
 
@@ -58,7 +69,7 @@ export default {
 
   &:hover {
     border-color: #00bf72;
-    transform: scale(1.05);
+    transform: scale(1.01);
     box-shadow: 0 8px 16px #000000;
   }
 

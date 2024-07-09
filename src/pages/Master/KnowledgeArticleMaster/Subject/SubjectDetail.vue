@@ -111,6 +111,7 @@
                   <knowledge-article-item
                      @click="onGoDetailKnowledgeArticlePage(item.knowledgeArticleId)"
                       :title="item.title"
+                     :cover-image="item.coverImage"
                       :tags="item.tagList"
                   ></knowledge-article-item>
                 </div>

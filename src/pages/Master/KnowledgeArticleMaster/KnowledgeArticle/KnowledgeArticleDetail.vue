@@ -137,7 +137,7 @@
 						</div>
 
 						<core-form-input
-							label="Core form label"
+							label="Tên bài viết"
 							:error="getInputErrorByKey('title')"
               :input-value="pageData.title"
               @onDeleteInputData="pageData.title = ''"
@@ -152,6 +152,23 @@
 								>
 							</template>
 						</core-form-input>
+
+            <core-form-input
+                label="Ảnh đại diện"
+                :error="getInputErrorByKey('coverImage')"
+                :input-value="pageData.coverImage"
+                @onDeleteInputData="pageData.coverImage = ''"
+                @onPasteInputData="(value) => pageData.coverImage = value"
+            >
+              <template #input-side>
+                <input
+                    v-model="pageData.coverImage"
+                    type="text"
+                    placeholder="Nhập text"
+                    @keyup.enter="save"
+                >
+              </template>
+            </core-form-input>
 
             <core-search-selection>
 
@@ -245,7 +262,7 @@
 						</div>
 
 						<core-form-input
-							label="Core form label"
+							label="Tên bài viết"
 							:error="getInputErrorByKey('title')"
               :input-value="pageData.title"
               @onDeleteInputData="pageData.title = ''"
@@ -259,6 +276,22 @@
 								>
 							</template>
 						</core-form-input>
+
+            <core-form-input
+                label="Ảnh đại diện"
+                :error="getInputErrorByKey('coverImage')"
+                :input-value="pageData.coverImage"
+                @onDeleteInputData="pageData.coverImage = ''"
+                @onPasteInputData="(value) => pageData.coverImage = value"
+            >
+              <template #input-side>
+                <input
+                    v-model="pageData.coverImage"
+                    type="text"
+                    placeholder="Nhập text"
+                >
+              </template>
+            </core-form-input>
 
             <core-search-selection>
 
@@ -397,7 +430,7 @@ export default {
 
 				title: null,
 
-				image: null,
+				coverImage: null,
 
 				unitContentList: [],
 
